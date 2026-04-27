@@ -1,0 +1,192 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "VAT-PERIOD-.YYYY.-.#####",
+ "creation": "2026-04-26 00:10:00.000000",
+ "doctype": "DocType",
+ "document_type": "Transaction",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "tax_configuration",
+  "fiscal_year",
+  "vat_liquidation_cadence",
+  "period_label",
+  "column_break_header",
+  "status",
+  "period_start_date",
+  "period_end_date",
+  "due_date",
+  "linked_settlement_entry",
+  "amounts_section",
+  "previous_credit_brought_forward",
+  "output_vat_total",
+  "input_vat_total",
+  "column_break_amounts",
+  "quarterly_interest_amount",
+  "final_payable_amount",
+  "final_credit_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tax_configuration",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tax Configuration",
+   "options": "Italy Tax Configuration",
+   "reqd": 1
+  },
+  {
+   "fieldname": "fiscal_year",
+   "fieldtype": "Link",
+   "label": "Fiscal Year",
+   "options": "Fiscal Year"
+  },
+  {
+   "fieldname": "vat_liquidation_cadence",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "VAT Liquidation Cadence",
+   "options": "\nMonthly\nQuarterly",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period_label",
+   "fieldtype": "Data",
+   "label": "Period Label"
+  },
+  {
+   "fieldname": "column_break_header",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "\nOpen\nDraft\nCalculated\nPosted\nClosed\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period_start_date",
+   "fieldtype": "Date",
+   "label": "Period Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "period_end_date",
+   "fieldtype": "Date",
+   "label": "Period End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "linked_settlement_entry",
+   "fieldtype": "Link",
+   "label": "Linked Settlement Entry",
+   "options": "Journal Entry"
+  },
+  {
+   "fieldname": "amounts_section",
+   "fieldtype": "Section Break",
+   "label": "Amounts"
+  },
+  {
+   "default": "0",
+   "fieldname": "previous_credit_brought_forward",
+   "fieldtype": "Currency",
+   "label": "Previous Credit Brought Forward"
+  },
+  {
+   "default": "0",
+   "fieldname": "output_vat_total",
+   "fieldtype": "Currency",
+   "label": "Output VAT Total"
+  },
+  {
+   "default": "0",
+   "fieldname": "input_vat_total",
+   "fieldtype": "Currency",
+   "label": "Input VAT Total"
+  },
+  {
+   "fieldname": "column_break_amounts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "quarterly_interest_amount",
+   "fieldtype": "Currency",
+   "label": "Quarterly Interest Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "final_payable_amount",
+   "fieldtype": "Currency",
+   "label": "Final Payable Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "final_credit_amount",
+   "fieldtype": "Currency",
+   "label": "Final Credit Amount"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-26 00:10:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fab Italy Tax",
+ "name": "VAT Period",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "period_label",
+ "track_changes": 1
+}

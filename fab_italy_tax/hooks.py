@@ -4,22 +4,20 @@ app_publisher = "fabricators"
 app_description = "Accounting, tax and finance management for Italian market"
 app_email = "support@fabricators.ltd"
 app_license = "agpl-3.0"
+app_home = "/app/fab-italy-tax"
 
 # Apps
 # ------------------
 
-# required_apps = []
+required_apps = ["erpnext", "fab"]
 
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "fab_italy_tax",
-# 		"logo": "/assets/fab_italy_tax/logo.png",
-# 		"title": "Fab Italy Tax",
-# 		"route": "/fab_italy_tax",
-# 		"has_permission": "fab_italy_tax.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": app_name,
+		"title": app_title,
+		"route": app_home,
+	}
+]
 
 # Includes in <head>
 # ------------------
@@ -42,8 +40,10 @@ app_license = "agpl-3.0"
 # include js in page
 # page_js = {"page" : "public/js/file.js"}
 
-# include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+	"Italy Tax Configuration": "public/js/italy_tax_configuration.js",
+	"VAT Period": "public/js/vat_period.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -86,7 +86,7 @@ app_license = "agpl-3.0"
 # ------------
 
 # before_install = "fab_italy_tax.install.before_install"
-# after_install = "fab_italy_tax.install.after_install"
+after_install = "fab_italy_tax.install.after_install"
 
 # Uninstallation
 # ------------
@@ -138,13 +138,23 @@ app_license = "agpl-3.0"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Company": {
+		"on_update": "fab_italy_tax.company_tax_settings.sync_tax_configuration_from_company",
+	},
+	"Italy Tax Configuration": {
+		"on_update": "fab_italy_tax.company_tax_settings.sync_company_tax_fields_from_configuration",
+	},
+	"Sales Invoice": {
+		"before_naming": "fab_italy_tax.invoice_naming.apply_italy_invoice_naming_series",
+	},
+	"Purchase Invoice": {
+		"before_naming": "fab_italy_tax.invoice_naming.apply_italy_invoice_naming_series",
+	},
+	"VAT Period": {
+		"on_update": "fab_italy_tax.tax_calendar.sync_vat_period_tax_calendar_event",
+	},
+}
 
 # Scheduled Tasks
 # ---------------
@@ -171,6 +181,8 @@ app_license = "agpl-3.0"
 # -------
 
 # before_tests = "fab_italy_tax.install.before_tests"
+
+after_migrate = ["fab_italy_tax.install.after_migrate"]
 
 # Extend DocType Class
 # ------------------------------
@@ -255,4 +267,3 @@ app_license = "agpl-3.0"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

@@ -1,0 +1,192 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:company",
+ "creation": "2026-04-25 23:55:00.000000",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "enabled",
+  "vat_liquidation_cadence",
+  "first_managed_period_start_date",
+  "settlement_section",
+  "settlement_journal_naming_series",
+  "default_tax_payment_mode",
+  "column_break_settlement",
+  "vat_output_account",
+  "vat_input_account",
+  "vat_payable_account",
+  "vat_credit_account",
+  "quarterly_interest_account",
+  "carry_forward_account",
+  "cash_planning_section",
+  "include_employee_cost_in_cash_planning",
+  "employee_cost_source_mode",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "default": "Monthly",
+   "fieldname": "vat_liquidation_cadence",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "VAT Liquidation Cadence",
+   "options": "\nMonthly\nQuarterly",
+   "reqd": 1
+  },
+  {
+   "description": "First VAT period start date managed by FAB Italy Tax for this company.",
+   "fieldname": "first_managed_period_start_date",
+   "fieldtype": "Date",
+   "label": "First Managed Period Start Date"
+  },
+  {
+   "fieldname": "settlement_section",
+   "fieldtype": "Section Break",
+   "label": "Settlement Accounts"
+  },
+  {
+   "fieldname": "settlement_journal_naming_series",
+   "fieldtype": "Data",
+   "label": "Settlement Journal Naming Series"
+  },
+  {
+   "fieldname": "default_tax_payment_mode",
+   "fieldtype": "Link",
+   "label": "Default Tax Payment Mode",
+   "options": "Mode of Payment"
+  },
+  {
+   "fieldname": "column_break_settlement",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Used only when posting the VAT settlement entry. Sales VAT is aggregated from all Tax accounts on Sales Invoices.",
+   "fieldname": "vat_output_account",
+   "fieldtype": "Link",
+   "label": "VAT Output Account",
+   "options": "Account"
+  },
+  {
+   "description": "Used only when posting the VAT settlement entry. Purchase VAT is aggregated from all Tax accounts on Purchase Invoices.",
+   "fieldname": "vat_input_account",
+   "fieldtype": "Link",
+   "label": "VAT Input Account",
+   "options": "Account"
+  },
+  {
+   "description": "Liability account credited when a VAT period closes with an amount payable.",
+   "fieldname": "vat_payable_account",
+   "fieldtype": "Link",
+   "label": "VAT Payable Account",
+   "options": "Account"
+  },
+  {
+   "description": "Asset account debited when a VAT period closes with a VAT credit.",
+   "fieldname": "vat_credit_account",
+   "fieldtype": "Link",
+   "label": "VAT Credit Account",
+   "options": "Account"
+  },
+  {
+   "depends_on": "eval:doc.vat_liquidation_cadence=='Quarterly'",
+   "description": "Account used to book the quarterly interest charge when applicable.",
+   "fieldname": "quarterly_interest_account",
+   "fieldtype": "Link",
+   "label": "Quarterly Interest Account",
+   "options": "Account"
+  },
+  {
+   "description": "Control account used to carry a VAT credit into the next managed period.",
+   "fieldname": "carry_forward_account",
+   "fieldtype": "Link",
+   "label": "Carry Forward Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "cash_planning_section",
+   "fieldtype": "Section Break",
+   "label": "Cash Planning"
+  },
+  {
+   "default": "0",
+   "fieldname": "include_employee_cost_in_cash_planning",
+   "fieldtype": "Check",
+   "label": "Include Employee Cost in Cash Planning"
+  },
+  {
+   "default": "Accounting Entries",
+   "fieldname": "employee_cost_source_mode",
+   "fieldtype": "Select",
+   "label": "Employee Cost Source Mode",
+   "options": "\nHRMS Payroll\nAccounting Entries\nManual Adjustments",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-25 23:55:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fab Italy Tax",
+ "name": "Italy Tax Configuration",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "company",
+ "track_changes": 1
+}

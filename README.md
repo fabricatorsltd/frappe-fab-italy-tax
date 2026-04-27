@@ -1,33 +1,42 @@
-### Fab Italy Tax
+# FAB Italy Tax
 
-Accounting, tax and finance management for Italian market
+Italian tax, VAT, and accounting support for ERPNext.
 
-### Installation
+## Scope
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+`fab_italy_tax` groups the accounting and compliance helpers that are specific
+to the Italian market but independent from SDI transport.
+
+Current responsibilities include:
+
+- company-level Italian tax configuration
+- VAT-period generation and calendar workflows
+- tax settlement support
+- Italian invoice naming helpers
+- Desk workspaces and UI helpers for finance operators
+
+## Branches
+
+- `develop`: integration branch for testing against Frappe/ERPNext `develop`
+- `version-16`: stable branch for Frappe/ERPNext 16
+
+## Installation
 
 ```bash
 cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch version-16
-bench install-app fab_italy_tax
+bench get-app https://github.com/fabricatorsltd/frappe-fab-italy-tax.git --branch version-16
+bench --site [site] install-app fab_italy_tax
 ```
 
-### Contributing
-
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
+## Development
 
 ```bash
 cd apps/fab_italy_tax
 pre-commit install
 ```
 
-Pre-commit is configured to use the following tools for checking and formatting your code:
+Pre-commit is configured for Ruff, ESLint, Prettier, and PyUpgrade.
 
-- ruff
-- eslint
-- prettier
-- pyupgrade
+## License
 
-### License
-
-agpl-3.0
+GNU Affero General Public License v3.0

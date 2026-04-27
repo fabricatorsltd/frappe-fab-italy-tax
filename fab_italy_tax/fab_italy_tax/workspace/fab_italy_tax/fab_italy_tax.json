@@ -1,0 +1,64 @@
+{
+ "app": "fab_italy_tax",
+ "charts": [],
+ "content": "[{\"id\":\"fab_italy_tax_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Italy Tax</span>\",\"col\":12}},{\"id\":\"fab_italy_tax_shortcut_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Italy Tax Configuration\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VAT Periods\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VAT Adjustments\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tax Calendar Events\",\"col\":3}}]",
+ "creation": "2026-04-27 06:10:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "balance-scale",
+ "idx": 0,
+ "indicator_color": "blue",
+ "is_hidden": 0,
+ "label": "Italy Tax",
+ "links": [],
+ "modified": "2026-04-27 06:10:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fab Italy Tax",
+ "name": "Italy Tax",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 24.0,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Italy Tax Configuration",
+   "link_to": "Italy Tax Configuration",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "VAT Periods",
+   "link_to": "VAT Period",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "VAT Adjustments",
+   "link_to": "VAT Adjustment",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Tax Calendar Events",
+   "link_to": "Tax Calendar Event",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Italy Tax",
+ "type": "Workspace"
+}

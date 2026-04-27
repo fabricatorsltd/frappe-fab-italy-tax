@@ -1,0 +1,639 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version:  fab_italy_tax\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-04-26 10:37+0000\n"
+"PO-Revision-Date: 2026-04-26 12:02+0200\n"
+"Last-Translator: FAB Team\n"
+"Language: it\n"
+"Language-Team: Italian\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#. Option for the 'Employee Cost Source Mode' (Select) field in DocType 'Italy
+#. Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Accounting Entries"
+msgstr ""
+
+#. Name of a role
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Accounts Manager"
+msgstr ""
+
+#. Name of a role
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Accounts User"
+msgstr ""
+
+#. Label of the adjustment_type (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Adjustment Type"
+msgstr ""
+
+#. Label of the amount (Currency) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Amount"
+msgstr ""
+
+#. Label of the amounts_section (Section Break) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Amounts"
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Calculated"
+msgstr "Calcolato"
+
+#. Option for the 'Status' (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Cancelled"
+msgstr ""
+
+#. Label of the carry_forward_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:20
+#: fab_italy_tax/vat_settlement.py:103
+msgid "Carry Forward Account"
+msgstr "Conto di riporto a nuovo"
+
+#. Label of the cash_planning_section (Section Break) field in DocType 'Italy
+#. Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Cash Planning"
+msgstr "Pianificazione finanziaria"
+
+#. Option for the 'Status' (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Closed"
+msgstr "Chiuso"
+
+#. Label of the company (Link) field in DocType 'Italy Tax Configuration'
+#. Label of the company (Link) field in DocType 'VAT Adjustment'
+#. Label of the company (Link) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Company"
+msgstr "Azienda"
+
+#. Option for the 'Direction' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Decrease Credit"
+msgstr ""
+
+#. Option for the 'Direction' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Decrease Payable"
+msgstr ""
+
+#. Option for the 'Adjustment Type' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Deductible VAT Correction"
+msgstr ""
+
+#. Label of the default_tax_payment_mode (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Default Tax Payment Mode"
+msgstr "Modalita predefinita di pagamento imposte"
+
+#. Label of the direction (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Direction"
+msgstr ""
+
+#. Option for the 'Status' (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Draft"
+msgstr "Bozza"
+
+#. Label of the due_date (Date) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Due Date"
+msgstr "Data di scadenza"
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:55
+msgid "Due Date cannot be earlier than Period End Date."
+msgstr "La data di scadenza non può essere precedente alla data di fine periodo."
+
+#. Label of the employee_cost_source_mode (Select) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Employee Cost Source Mode"
+msgstr "Modalita origine costo del personale"
+
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:40
+msgid "Employee Cost Source Mode is not valid."
+msgstr "La modalità di origine del costo del personale non è valida."
+
+#. Label of the enabled (Check) field in DocType 'Italy Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Enabled"
+msgstr "Abilitato"
+
+#. Label of the final_credit_amount (Currency) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+#: fab_italy_tax/vat_settlement.py:84
+msgid "Final Credit Amount"
+msgstr "Importo finale a credito"
+
+#. Label of the final_payable_amount (Currency) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+#: fab_italy_tax/vat_settlement.py:81
+msgid "Final Payable Amount"
+msgstr "Importo finale da versare"
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:64
+msgid "Final Payable Amount and Final Credit Amount cannot both be positive."
+msgstr "L'importo finale da versare e l'importo finale a credito non possono essere entrambi positivi."
+
+#. Label of the first_managed_period_start_date (Date) field in DocType 'Italy
+#. Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "First Managed Period Start Date"
+msgstr "Data inizio primo periodo gestito"
+
+#. Description of the 'First Managed Period Start Date' (Date) field in DocType
+#. 'Italy Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "First VAT period start date managed by FAB Italy Tax for this company."
+msgstr "Data di inizio del primo periodo IVA gestito da FAB Italy Tax per questa azienda."
+
+#. Label of the fiscal_year (Link) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Fiscal Year"
+msgstr "Anno fiscale"
+
+#. Option for the 'Employee Cost Source Mode' (Select) field in DocType 'Italy
+#. Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "HRMS Payroll"
+msgstr "Buste paga HRMS"
+
+#. Label of the include_employee_cost_in_cash_planning (Check) field in DocType
+#. 'Italy Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Include Employee Cost in Cash Planning"
+msgstr "Includi il costo del personale nella pianificazione finanziaria"
+
+#. Option for the 'Direction' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Increase Credit"
+msgstr ""
+
+#. Option for the 'Direction' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Increase Payable"
+msgstr ""
+
+#. Label of the input_vat_total (Currency) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+#: fab_italy_tax/vat_settlement.py:71
+msgid "Input VAT Total"
+msgstr "Totale IVA sugli acquisti"
+
+#. Name of a DocType
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Italy Tax Configuration"
+msgstr ""
+
+#. Label of the linked_settlement_entry (Link) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Linked Settlement Entry"
+msgstr "Registrazione di liquidazione collegata"
+
+#. Option for the 'Employee Cost Source Mode' (Select) field in DocType 'Italy
+#. Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Manual Adjustments"
+msgstr ""
+
+#. Option for the 'VAT Liquidation Cadence' (Select) field in DocType 'Italy
+#. Tax Configuration'
+#. Option for the 'VAT Liquidation Cadence' (Select) field in DocType 'VAT
+#. Period'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Monthly"
+msgstr "Mensile"
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:76
+msgid "Monthly VAT periods must end on the last day of the month."
+msgstr "I periodi IVA mensili devono terminare l'ultimo giorno del mese."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:73
+msgid "Monthly VAT periods must start on the first day of the month."
+msgstr "I periodi IVA mensili devono iniziare il primo giorno del mese."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:70
+msgid "Monthly VAT periods must stay within a single calendar month."
+msgstr "I periodi IVA mensili devono rientrare in un solo mese di calendario."
+
+#. Option for the 'Adjustment Type' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Non-deductible VAT Correction"
+msgstr ""
+
+#. Label of the notes (Small Text) field in DocType 'Italy Tax Configuration'
+#. Label of the notes (Small Text) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Notes"
+msgstr "Note"
+
+#. Option for the 'Status' (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Open"
+msgstr "Aperto"
+
+#. Option for the 'Adjustment Type' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Other"
+msgstr ""
+
+#. Label of the output_vat_total (Currency) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+#: fab_italy_tax/vat_settlement.py:68
+msgid "Output VAT Total"
+msgstr "Totale IVA sulle vendite"
+
+#. Label of the period_end_date (Date) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Period End Date"
+msgstr "Data fine periodo"
+
+#. Label of the period_label (Data) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Period Label"
+msgstr "Etichetta periodo"
+
+#. Label of the period_start_date (Date) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Period Start Date"
+msgstr "Data inizio periodo"
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:52
+msgid "Period Start Date cannot be after Period End Date."
+msgstr "La data di inizio periodo non può essere successiva alla data di fine periodo."
+
+#. Option for the 'Status' (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Posted"
+msgstr "Registrato"
+
+#. Label of the previous_credit_brought_forward (Currency) field in DocType
+#. 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+#: fab_italy_tax/vat_settlement.py:74
+msgid "Previous Credit Brought Forward"
+msgstr "Credito precedente riportato"
+
+#. Option for the 'Adjustment Type' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Previous Credit Carry Forward"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:111
+msgid "Previous Credit Carry Forward adjustments must decrease payable VAT or increase VAT credit."
+msgstr "Le rettifiche di riporto del credito precedente devono ridurre l'IVA da versare o aumentare il credito IVA."
+
+#. Option for the 'VAT Liquidation Cadence' (Select) field in DocType 'Italy
+#. Tax Configuration'
+#. Option for the 'VAT Liquidation Cadence' (Select) field in DocType 'VAT
+#. Period'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Quarterly"
+msgstr "Trimestrale"
+
+#. Option for the 'Adjustment Type' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Quarterly Interest"
+msgstr ""
+
+#. Label of the quarterly_interest_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:19
+#: fab_italy_tax/vat_settlement.py:112
+msgid "Quarterly Interest Account"
+msgstr "Conto interessi trimestrali"
+
+#. Label of the quarterly_interest_amount (Currency) field in DocType 'VAT
+#. Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+#: fab_italy_tax/vat_settlement.py:78
+msgid "Quarterly Interest Amount"
+msgstr "Importo interessi trimestrali"
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:104
+msgid "Quarterly Interest adjustments must use the Increase Payable direction."
+msgstr "Le rettifiche per interessi trimestrali devono usare la direzione Aumenta debito."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:102
+msgid "Quarterly Interest adjustments require a Quarterly VAT Period."
+msgstr "Le rettifiche per interessi trimestrali richiedono un periodo IVA trimestrale."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:87
+msgid "Quarterly VAT periods cannot span multiple fiscal years."
+msgstr "I periodi IVA trimestrali non possono estendersi su più esercizi fiscali."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:90
+msgid "Quarterly VAT periods must end on the last day of the calendar quarter."
+msgstr "I periodi IVA trimestrali devono terminare l'ultimo giorno del trimestre solare."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:84
+msgid "Quarterly VAT periods must start on the first day of a calendar quarter."
+msgstr "I periodi IVA trimestrali devono iniziare il primo giorno di un trimestre solare."
+
+#. Label of the reason (Small Text) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Reason"
+msgstr ""
+
+#. Label of the reference_section (Section Break) field in DocType 'VAT
+#. Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Reference"
+msgstr ""
+
+#. Label of the reference_doctype (Link) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Reference DocType"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:76
+msgid "Reference DocType does not exist."
+msgstr "Il DocType di riferimento non esiste."
+
+#. Label of the reference_name (Dynamic Link) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Reference Name"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:79
+msgid "Reference Name does not exist for the selected Reference DocType."
+msgstr "Il nome di riferimento non esiste per il DocType di riferimento selezionato."
+
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:50
+msgid "Set First Managed Period Start Date before enabling the tax configuration."
+msgstr "Imposta la data di inizio del primo periodo gestito prima di abilitare la configurazione fiscale."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:61
+msgid "Set Linked Settlement Entry before marking a VAT period as Posted or Closed."
+msgstr "Imposta la registrazione di liquidazione collegata prima di contrassegnare un periodo IVA come Pubblicato o Chiuso."
+
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:57
+msgid "Set Quarterly Interest Account before enabling quarterly VAT liquidation."
+msgstr "Imposta il conto interessi trimestrali prima di abilitare la liquidazione IVA trimestrale."
+
+#: fab_italy_tax/vat_period_calculation.py:50
+msgid "Set Tax Configuration before recalculating a VAT Period."
+msgstr "Imposta la configurazione fiscale prima di ricalcolare un periodo IVA."
+
+#: fab_italy_tax/vat_period_calculation.py:32
+msgid "Set VAT Input Account on the linked tax configuration before recalculating a VAT Period."
+msgstr "Imposta il conto IVA acquisti nella configurazione fiscale collegata prima di ricalcolare un periodo IVA."
+
+#: fab_italy_tax/vat_period_calculation.py:29
+msgid "Set VAT Output Account on the linked tax configuration before recalculating a VAT Period."
+msgstr "Imposta il conto IVA vendite nella configurazione fiscale collegata prima di ricalcolare un periodo IVA."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:62
+msgid "Set a Reason before saving a VAT Adjustment."
+msgstr "Imposta una motivazione prima di salvare una rettifica IVA."
+
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:43
+msgid "Set an Employee Cost Source Mode before enabling employee-cost cash planning."
+msgstr "Imposta una modalità di origine del costo del personale prima di abilitare la pianificazione di cassa dei costi del personale."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:70
+msgid "Set both Reference DocType and Reference Name, or leave both empty."
+msgstr "Imposta sia il DocType di riferimento sia il nome di riferimento, oppure lascia entrambi vuoti."
+
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:54
+#, python-brace-format
+msgid "Set {0} before enabling the tax configuration."
+msgstr "Imposta {0} prima di abilitare la configurazione fiscale."
+
+#: fab_italy_tax/vat_settlement.py:159
+#, python-brace-format
+msgid "Set {0} on the linked tax configuration before posting VAT settlement."
+msgstr "Imposta {0} nella configurazione fiscale collegata prima di contabilizzare la liquidazione IVA."
+
+#. Label of the settlement_section (Section Break) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Settlement Accounts"
+msgstr "Conti di liquidazione"
+
+#. Option for the 'Adjustment Type' (Select) field in DocType 'VAT Adjustment'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "Settlement Correction"
+msgstr ""
+
+#. Label of the settlement_journal_naming_series (Data) field in DocType 'Italy
+#. Tax Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Settlement Journal Naming Series"
+msgstr "Serie numerazione registrazioni di liquidazione"
+
+#. Label of the status (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Status"
+msgstr "Stato"
+
+#. Name of a role
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "System Manager"
+msgstr ""
+
+#. Label of the tax_configuration (Link) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "Tax Configuration"
+msgstr "Configurazione fiscale"
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:99
+msgid "Tax Configuration must belong to the selected company."
+msgstr "La configurazione fiscale deve appartenere all'azienda selezionata."
+
+#: fab_italy_tax/vat_settlement.py:25
+msgid "This VAT Period already has a Linked Settlement Entry."
+msgstr "Questo periodo IVA ha già una registrazione di liquidazione collegata."
+
+#. Name of a DocType
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+msgid "VAT Adjustment"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:59
+msgid "VAT Adjustment Amount must be greater than zero."
+msgstr "L'importo della rettifica IVA deve essere maggiore di zero."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:56
+msgid "VAT Adjustment Direction is not valid."
+msgstr "La direzione della rettifica IVA non è valida."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:53
+msgid "VAT Adjustment Type is not valid."
+msgstr "Il tipo di rettifica IVA non è valido."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:93
+msgid "VAT Adjustment company must match the linked VAT Period company."
+msgstr "L'azienda della rettifica IVA deve corrispondere all'azienda del periodo IVA collegato."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:123
+msgid "VAT Adjustment records are append-only. Add a new adjustment instead of editing history."
+msgstr "Le registrazioni di rettifica IVA sono solo aggiuntive. Aggiungi una nuova rettifica invece di modificare la cronologia."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:129
+msgid "VAT Adjustment records are append-only. Add a reversing adjustment instead of deleting history."
+msgstr "Le registrazioni di rettifica IVA sono solo aggiuntive. Aggiungi una rettifica di storno invece di eliminare la cronologia."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:97
+msgid "VAT Adjustments cannot be added to Posted, Closed, or Cancelled VAT Periods."
+msgstr "Non è possibile aggiungere rettifiche IVA a periodi IVA in stato Pubblicato, Chiuso o Annullato."
+
+#. Label of the vat_credit_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:16
+#: fab_italy_tax/vat_settlement.py:127
+msgid "VAT Credit Account"
+msgstr "Conto credito IVA"
+
+#. Description of the vat_credit_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Asset account debited when a VAT period closes with a VAT credit."
+msgstr "Conto patrimoniale addebitato quando un periodo IVA si chiude con un credito IVA."
+
+#. Label of the vat_input_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:14
+#: fab_italy_tax/vat_settlement.py:95
+msgid "VAT Input Account"
+msgstr "Conto IVA acquisti"
+
+#. Description of the vat_input_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Used only when posting the VAT settlement entry. Purchase VAT is aggregated from all Tax accounts on Purchase Invoices."
+msgstr "Usato solo per registrare la scrittura di liquidazione IVA. L'IVA acquisti viene aggregata da tutti i conti fiscali delle fatture di acquisto."
+
+#. Label of the vat_liquidation_cadence (Select) field in DocType 'Italy Tax
+#. Configuration'
+#. Label of the vat_liquidation_cadence (Select) field in DocType 'VAT Period'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "VAT Liquidation Cadence"
+msgstr "Cadenza liquidazione IVA"
+
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:37
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:46
+msgid "VAT Liquidation Cadence must be Monthly or Quarterly."
+msgstr "La cadenza della liquidazione IVA deve essere Mensile o Trimestrale."
+
+#. Label of the vat_output_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:13
+#: fab_italy_tax/vat_settlement.py:90
+msgid "VAT Output Account"
+msgstr "Conto IVA vendite"
+
+#. Description of the vat_output_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Used only when posting the VAT settlement entry. Sales VAT is aggregated from all Tax accounts on Sales Invoices."
+msgstr "Usato solo per registrare la scrittura di liquidazione IVA. L'IVA vendite viene aggregata da tutti i conti fiscali delle fatture di vendita."
+
+#. Label of the vat_payable_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:15
+#: fab_italy_tax/vat_settlement.py:120
+msgid "VAT Payable Account"
+msgstr "Conto IVA da versare"
+
+#. Description of the vat_payable_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Liability account credited when a VAT period closes with an amount payable."
+msgstr "Conto passivo accreditato quando un periodo IVA si chiude con un importo da versare."
+
+#. Description of the quarterly_interest_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Account used to book the quarterly interest charge when applicable."
+msgstr "Conto usato per registrare l'addebito degli interessi trimestrali quando applicabili."
+
+#. Description of the carry_forward_account (Link) field in DocType 'Italy Tax
+#. Configuration'
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.json
+msgid "Control account used to carry a VAT credit into the next managed period."
+msgstr "Conto di controllo usato per riportare un credito IVA al periodo gestito successivo."
+
+#. Label of the vat_period (Link) field in DocType 'VAT Adjustment'
+#. Name of a DocType
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.json
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.json
+msgid "VAT Period"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:105
+msgid "VAT Period cadence must match the linked tax configuration."
+msgstr "La cadenza del periodo IVA deve corrispondere alla configurazione fiscale collegata."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_adjustment/vat_adjustment.py:89
+msgid "VAT Period does not exist."
+msgstr "Il periodo IVA non esiste."
+
+#: fab_italy_tax/vat_settlement.py:31
+msgid "VAT Period has no amounts to settle."
+msgstr "Il periodo IVA non ha importi da liquidare."
+
+#: fab_italy_tax/fab_italy_tax/doctype/vat_period/vat_period.py:49
+msgid "VAT Period status is not valid."
+msgstr "Lo stato del periodo IVA non è valido."
+
+#: fab_italy_tax/vat_period_calculation.py:22
+msgid "VAT Periods in status Posted, Closed, or Cancelled cannot be recalculated."
+msgstr "I periodi IVA in stato Pubblicato, Chiuso o Annullato non possono essere ricalcolati."
+
+#: fab_italy_tax/vat_settlement.py:22
+msgid "VAT Periods in status Posted, Closed, or Cancelled cannot post a settlement entry."
+msgstr "I periodi IVA in stato Pubblicato, Chiuso o Annullato non possono contabilizzare una registrazione di liquidazione."
+
+#: fab_italy_tax/vat_settlement.py:134
+msgid "VAT settlement entry is not balanced. Recalculate the VAT Period before posting."
+msgstr "La registrazione di liquidazione IVA non è quadrata. Ricalcola il periodo IVA prima della contabilizzazione."
+
+#: fab_italy_tax/vat_settlement.py:172
+#, python-brace-format
+msgid "VAT settlement for {0}"
+msgstr "Liquidazione IVA per {0}"
+
+#: fab_italy_tax/vat_settlement.py:165
+#, python-brace-format
+msgid "{0} cannot be negative when posting VAT settlement."
+msgstr "{0} non può essere negativo durante la contabilizzazione della liquidazione IVA."
+
+#: fab_italy_tax/fab_italy_tax/doctype/italy_tax_configuration/italy_tax_configuration.py:74
+#, python-brace-format
+msgid "{0} must belong to company {1}."
+msgstr "{0} deve appartenere all'azienda {1}."
