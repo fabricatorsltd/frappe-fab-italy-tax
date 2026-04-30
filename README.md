@@ -1,4 +1,4 @@
-# FAB Italy Tax
+# fab Italy Tax
 
 Italian tax, VAT, and accounting support for ERPNext.
 
@@ -27,6 +27,15 @@ cd $PATH_TO_YOUR_BENCH
 bench get-app https://github.com/fabricatorsltd/frappe-fab-italy-tax.git --branch version-16
 bench --site [site] install-app fab_italy_tax
 ```
+
+## Contributing
+
+Follow the official Frappe contribution guidelines:
+
+- <https://github.com/frappe/erpnext/wiki/Contribution-Guidelines>
+
+Use the upstream guidance for proposals, coding standards, pull requests, and
+documentation updates when contributing to this app.
 
 ## Development
 

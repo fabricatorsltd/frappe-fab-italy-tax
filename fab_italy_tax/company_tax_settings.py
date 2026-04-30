@@ -162,6 +162,102 @@ def provision_tax_configuration_setup(tax_configuration: str) -> dict[str, Any]:
 	}
 
 
+@frappe.whitelist()
+def get_company_tax_onboarding(company: str) -> dict[str, Any]:
+	if not cstr(company).strip():
+		frappe.throw(_("Set Company before reviewing Italy Tax onboarding."))
+
+	document = frappe.get_doc("Company", company)
+	config_name = frappe.db.get_value("Italy Tax Configuration", {"company": company}, "name")
+	steps = build_company_tax_onboarding_steps(document, config_name=config_name)
+	pending_count = sum(1 for step in steps if step["status"] == "pending")
+	review_count = sum(1 for step in steps if step["status"] == "review")
+	done_count = sum(1 for step in steps if step["status"] == "done")
+	return {
+		"company": company,
+		"enabled": cint(get_document_value(document, "fab_itx_enabled")),
+		"config_name": config_name,
+		"steps": steps,
+		"pending_count": pending_count,
+		"review_count": review_count,
+		"done_count": done_count,
+	}
+
+
+def build_company_tax_onboarding_steps(document: Any, config_name: str | None = None) -> list[dict[str, Any]]:
+	company = cstr(get_document_value(document, "name")).strip()
+	vat_missing = get_missing_company_vat_setup(document)
+	year_close_missing = get_missing_company_year_close_setup(document)
+	asset_category_count = cint(frappe.db.count("Asset Category"))
+
+	steps = [
+		{
+			"id": "vat-setup",
+			"status": "done" if not vat_missing else "pending",
+			"title": _("Provision VAT setup"),
+			"description": (
+				_("VAT defaults are provisioned.")
+				if not vat_missing
+				else _("Missing setup: {0}. Use Provision VAT Setup or complete the fields manually.").format(
+					", ".join(vat_missing)
+				)
+			),
+			"action_label": _("Open VAT setup"),
+			"route": ["Form", "Italy Tax Configuration", config_name] if config_name else ["Form", "Company", company],
+		},
+		{
+			"id": "year-close-accounts",
+			"status": "done" if not year_close_missing else "pending",
+			"title": _("Configure year-end close accounts"),
+			"description": (
+				_("Accrued revenue and accrued expense accounts are configured.")
+				if not year_close_missing
+				else _("Set the following fields on Company before using competence year-end adjustments: {0}.").format(
+					", ".join(year_close_missing)
+				)
+			),
+			"action_label": _("Open Company"),
+			"route": ["Form", "Company", company],
+		},
+		{
+			"id": "asset-categories",
+			"status": "review" if asset_category_count else "pending",
+			"title": _("Review asset categories for Italian amortization"),
+			"description": (
+				_("Create Asset Categories with the Italian depreciation schedule before booking amortizable purchases.")
+				if not asset_category_count
+				else _(
+					"Review Asset Category depreciation rates, useful lives, and first-year rules so standard asset amortization matches the Italian policy."
+				)
+			),
+			"action_label": _("Open Asset Categories"),
+			"route": ["List", "Asset Category", "List"],
+		},
+		{
+			"id": "fiscal-adjustments",
+			"status": "review",
+			"title": _("Define the fiscal adjustment policy"),
+			"description": _(
+				"If civil amortization and fiscal deductibility differ, plan the year-end fiscal adjustments separately from the standard depreciation schedule."
+			),
+			"action_label": _("Open Italian Yearly Balance"),
+			"route": ["query-report", "Italian Yearly Balance"],
+			"route_options": {"company": company},
+		},
+		{
+			"id": "operational-coverage",
+			"status": "review",
+			"title": _("Review non-invoice Italian postings"),
+			"description": _(
+				"Decide how bank fees, F24 payments, non-deductible costs, and other manual adjustments will be recorded before go-live."
+			),
+			"action_label": _("Open Company"),
+			"route": ["Form", "Company", company],
+		},
+	]
+	return steps
+
+
 def build_tax_configuration_payload(document) -> dict[str, Any]:
 	payload = {
 		"doctype": "Italy Tax Configuration",
@@ -232,6 +328,38 @@ def build_missing_configuration_setup_updates(document: Any) -> dict[str, Any]:
 	if not cstr(current_values.get("default_tax_payment_mode")).strip():
 		updates["default_tax_payment_mode"] = ensure_default_mode_of_payment()
 	return updates
+
+
+def get_missing_company_vat_setup(document: Any) -> list[str]:
+	missing: list[str] = []
+	for fieldname, label in (
+		("fab_itx_first_managed_period_start_date", _("first managed period start date")),
+		("fab_itx_default_tax_payment_mode", _("default tax payment mode")),
+		("fab_itx_vat_output_account", _("VAT output account")),
+		("fab_itx_vat_input_account", _("VAT input account")),
+		("fab_itx_vat_payable_account", _("VAT payable account")),
+		("fab_itx_vat_credit_account", _("VAT credit account")),
+		("fab_itx_carry_forward_account", _("carry forward account")),
+	):
+		if not cstr(get_document_value(document, fieldname)).strip():
+			missing.append(label)
+
+	if normalize_cadence(get_document_value(document, "fab_itx_vat_liquidation_cadence")) == "Quarterly" and not cstr(
+		get_document_value(document, "fab_itx_quarterly_interest_account")
+	).strip():
+		missing.append(_("quarterly interest account"))
+	return missing
+
+
+def get_missing_company_year_close_setup(document: Any) -> list[str]:
+	missing: list[str] = []
+	for fieldname, label in (
+		("fab_itx_accrued_revenue_account", _("Accrued Revenue Account")),
+		("fab_itx_accrued_expense_account", _("Accrued Expense Account")),
+	):
+		if not cstr(get_document_value(document, fieldname)).strip():
+			missing.append(label)
+	return missing
 
 
 def build_missing_tax_setup_updates(

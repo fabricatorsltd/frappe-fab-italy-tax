@@ -6,7 +6,9 @@ from unittest.mock import Mock, patch
 from datetime import date
 
 from fab_italy_tax.company_tax_settings import (
+	build_company_tax_onboarding_steps,
 	ensure_default_company_tax_setup,
+	get_company_tax_onboarding,
 	provision_tax_configuration_setup,
 	sync_company_tax_fields_from_configuration,
 	sync_tax_configuration_from_company,
@@ -171,6 +173,8 @@ class TestCompanyTaxSettings(unittest.TestCase):
 			"company": "Fabricators",
 			"enabled": 1,
 			"vat_liquidation_cadence": "Monthly",
+			"first_managed_period_start_date": "2026-01-01",
+			"default_tax_payment_mode": "F24 Tax Payment",
 			"vat_output_account": "VAT Output - FAB",
 			"vat_input_account": "VAT Input - FAB",
 			"vat_payable_account": "VAT Payable - FAB",
@@ -271,3 +275,40 @@ class TestCompanyTaxSettings(unittest.TestCase):
 		self.assertEqual(document.vat_payable_account, "VAT Payable - FAB")
 		self.assertEqual(document.default_tax_payment_mode, "F24 Tax Payment")
 		document.save.assert_called_once_with(ignore_permissions=True)
+
+	def test_build_company_tax_onboarding_steps_marks_missing_year_close_and_assets(self):
+		company = build_company(
+			fab_itx_accrued_revenue_account="",
+			fab_itx_accrued_expense_account="",
+		)
+		frappe_stub = SimpleNamespace(db=SimpleNamespace(count=Mock(return_value=0)))
+
+		with patch("fab_italy_tax.company_tax_settings.frappe", new=frappe_stub):
+			steps = build_company_tax_onboarding_steps(company, config_name="FAB-ITX")
+
+		steps_by_id = {step["id"]: step for step in steps}
+		self.assertEqual(steps_by_id["vat-setup"]["status"], "done")
+		self.assertEqual(steps_by_id["year-close-accounts"]["status"], "pending")
+		self.assertEqual(steps_by_id["asset-categories"]["status"], "pending")
+		self.assertEqual(steps_by_id["fiscal-adjustments"]["status"], "review")
+
+	def test_get_company_tax_onboarding_returns_summary_counts(self):
+		company = build_company(
+			fab_itx_accrued_revenue_account="1365 - Accrued Revenue - FAB",
+			fab_itx_accrued_expense_account="2125 - Accrued Expense - FAB",
+		)
+		frappe_stub = SimpleNamespace(
+			get_doc=Mock(return_value=company),
+			db=SimpleNamespace(
+				get_value=Mock(return_value="FAB-ITX"),
+				count=Mock(return_value=2),
+			),
+		)
+
+		with patch("fab_italy_tax.company_tax_settings.frappe", new=frappe_stub):
+			result = get_company_tax_onboarding("Fabricators")
+
+		self.assertEqual(result["company"], "Fabricators")
+		self.assertEqual(result["pending_count"], 0)
+		self.assertGreaterEqual(result["review_count"], 3)
+		self.assertEqual(result["done_count"], 2)

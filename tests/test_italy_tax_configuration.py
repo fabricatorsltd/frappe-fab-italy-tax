@@ -130,3 +130,18 @@ class TestItalyTaxConfiguration(unittest.TestCase):
 			self.assertRaisesRegex(ValidationError, "Employee Cost Source Mode"),
 		):
 			validate_italy_tax_configuration(document)
+
+	def test_employee_cost_entries_mode_is_valid(self):
+		document = build_document(employee_cost_source_mode="Employee Cost Entries")
+
+		with (
+			patch(
+				"fab_italy_tax.fab_italy_tax.doctype.italy_tax_configuration.italy_tax_configuration.frappe.throw",
+				side_effect=raise_validation_error,
+			),
+			patch(
+				"fab_italy_tax.fab_italy_tax.doctype.italy_tax_configuration.italy_tax_configuration.frappe.get_cached_value",
+				return_value="Fabricators",
+			),
+		):
+			validate_italy_tax_configuration(document)

@@ -43,6 +43,9 @@ add_to_apps_screen = [
 doctype_js = {
 	"Italy Tax Configuration": "public/js/italy_tax_configuration.js",
 	"VAT Period": "public/js/vat_period.js",
+	"Company": "public/js/company_tax_onboarding.js",
+	"Sales Invoice": "public/js/yearly_close_invoice.js",
+	"Purchase Invoice": "public/js/yearly_close_invoice.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -147,9 +150,17 @@ doc_events = {
 	},
 	"Sales Invoice": {
 		"before_naming": "fab_italy_tax.invoice_naming.apply_italy_invoice_naming_series",
+		"validate": "fab_italy_tax.yearly_close.validate_sales_invoice_yearly_close",
+		"on_submit": "fab_italy_tax.yearly_close.sync_invoice_competence_entries",
+		"on_update_after_submit": "fab_italy_tax.yearly_close.sync_invoice_competence_entries",
+		"on_cancel": "fab_italy_tax.yearly_close.cancel_linked_competence_entries",
 	},
 	"Purchase Invoice": {
 		"before_naming": "fab_italy_tax.invoice_naming.apply_italy_invoice_naming_series",
+		"validate": "fab_italy_tax.yearly_close.validate_purchase_invoice_yearly_close",
+		"on_submit": "fab_italy_tax.yearly_close.sync_invoice_competence_entries",
+		"on_update_after_submit": "fab_italy_tax.yearly_close.sync_invoice_competence_entries",
+		"on_cancel": "fab_italy_tax.yearly_close.cancel_linked_competence_entries",
 	},
 	"VAT Period": {
 		"on_update": "fab_italy_tax.tax_calendar.sync_vat_period_tax_calendar_event",

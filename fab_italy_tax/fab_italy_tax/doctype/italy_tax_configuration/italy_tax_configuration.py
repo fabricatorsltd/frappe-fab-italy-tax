@@ -8,7 +8,12 @@ from frappe.model.document import Document
 from frappe.utils import cint, cstr
 
 VAT_LIQUIDATION_CADENCES = {"Monthly", "Quarterly"}
-EMPLOYEE_COST_SOURCE_MODES = {"HRMS Payroll", "Accounting Entries", "Manual Adjustments"}
+EMPLOYEE_COST_SOURCE_MODES = {
+	"HRMS Payroll",
+	"Accounting Entries",
+	"Manual Adjustments",
+	"Employee Cost Entries",
+}
 MANDATORY_ACCOUNT_FIELDS = {
 	"vat_output_account": _("VAT Output Account"),
 	"vat_input_account": _("VAT Input Account"),

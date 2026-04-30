@@ -137,7 +137,7 @@
    "fieldname": "employee_cost_source_mode",
    "fieldtype": "Select",
    "label": "Employee Cost Source Mode",
-   "options": "\nHRMS Payroll\nAccounting Entries\nManual Adjustments",
+   "options": "\nHRMS Payroll\nAccounting Entries\nManual Adjustments\nEmployee Cost Entries",
    "reqd": 1
   },
   {

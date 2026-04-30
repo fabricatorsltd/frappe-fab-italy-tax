@@ -6,9 +6,9 @@ import frappe
 from frappe.utils import cint, cstr
 
 SALES_INVOICE_SERIES = "FATT/.YYYY./.#####"
-SALES_CREDIT_NOTE_SERIES = "NDC/.YYYY./.###"
-PURCHASE_INVOICE_SERIES = "ACQ/.YYYY./.###"
-PURCHASE_CREDIT_NOTE_SERIES = "RACQ/.YYYY./.###"
+SALES_CREDIT_NOTE_SERIES = "NDC/.YYYY./.#####"
+PURCHASE_INVOICE_SERIES = "ACQ/.YYYY./.#####"
+PURCHASE_CREDIT_NOTE_SERIES = "RACQ/.YYYY./.#####"
 
 SERIES_CONFIG = {
 	"Sales Invoice": {
