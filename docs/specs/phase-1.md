@@ -108,13 +108,16 @@ Phase 1 is complete when:
 
 ## Current implementation status
 
-Implemented in the current app scaffold:
+Implemented:
 
-- app exists and is installed
-- no business logic yet
-- no DocTypes yet
-- no tax computations yet
-- no finance reports yet
+- Italy Tax Configuration, synced from the Company "Italy Tax" fields
+- VAT period generation, calculation, settlement posting, carry-forward
+- VAT rate registry with generated tax templates (`vat-rates.md`)
+- Italian invoice naming series
+- tax calendar events with `fab_f24` deadline integration
+- yearly close: competence year handling, accrual entries, yearly balance report
+- purchase deductibility fields at row and invoice level
+- cash-flow monitor and employee-cost cash planning reports
 
 ## Initial backlog
 

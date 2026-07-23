@@ -10,10 +10,27 @@ to the Italian market but independent from SDI transport.
 Current responsibilities include:
 
 - company-level Italian tax configuration
+- the standard Italian VAT rate registry and generated tax templates
 - VAT-period generation and calendar workflows
 - tax settlement support
 - Italian invoice naming helpers
 - Desk workspaces and UI helpers for finance operators
+
+## VAT rate registry
+
+The app seeds an `Italy VAT Rate` record for every rate of the standard
+Italian matrix (positive rates, zero rates with their FatturaPA nature code,
+reverse charge variants). Each enabled rate generates the matching Sales or
+Purchase Taxes and Charges Template on the company VAT accounts; sales rates
+also generate an Item Tax Template for per-item overrides, and reverse
+charge rates generate the paired add/deduct rows that net to zero. Rates are
+disabled, never deleted, so the templates in actual use stay a clean subset
+of the matrix. See `docs/specs/vat-rates.md`.
+
+## Documentation
+
+- `docs/operator-guide.md` - setup and day-to-day usage for finance operators
+- `docs/specs/` - domain model, workflows, VAT rate registry
 
 ## Branches
 
