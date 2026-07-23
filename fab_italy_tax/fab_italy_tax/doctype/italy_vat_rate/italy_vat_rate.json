@@ -1,0 +1,135 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:rate_key",
+ "creation": "2026-07-23 15:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "applies_to",
+  "rate",
+  "column_break_head",
+  "nature",
+  "reverse_charge",
+  "section_details",
+  "description",
+  "rate_key",
+  "seeded"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "description": "Enabled rates generate their tax templates and appear in day to day use. Keep unused rates disabled so the effective usage stays clean.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "applies_to",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Applies To",
+   "options": "Sales\nPurchase",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Rate",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_head",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "FatturaPA Natura for zero rated rows (N1, N2.1, N3.1...). For reverse charge variants it can hold a flavor marker such as N6.7 or UE.",
+   "fieldname": "nature",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nature"
+  },
+  {
+   "default": "0",
+   "description": "Purchase reverse charge: the template books the same VAT on both the input and the output account.",
+   "fieldname": "reverse_charge",
+   "fieldtype": "Check",
+   "label": "Reverse Charge"
+  },
+  {
+   "fieldname": "section_details",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Description"
+  },
+  {
+   "fieldname": "rate_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Rate Key",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "seeded",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Seeded"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-23 15:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fab Italy Tax",
+ "name": "Italy VAT Rate",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User"
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "rate_key",
+ "sort_order": "ASC",
+ "states": []
+}

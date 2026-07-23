@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 from fab_italy_tax.company_tax_settings import (
@@ -20,6 +21,7 @@ def after_install():
 	ensure_enabled_company_tax_setup()
 	sync_enabled_tax_configuration_vat_periods()
 	sync_existing_vat_period_tax_calendar_events()
+	ensure_standard_vat_rate_registry()
 
 
 def after_migrate():
@@ -30,6 +32,7 @@ def after_migrate():
 	ensure_enabled_company_tax_setup()
 	sync_enabled_tax_configuration_vat_periods()
 	sync_existing_vat_period_tax_calendar_events()
+	ensure_standard_vat_rate_registry()
 
 
 def ensure_custom_fields():
@@ -302,3 +305,12 @@ def build_competence_year_custom_field(insert_after: str) -> dict[str, object]:
 		"allow_on_submit": 1,
 		"insert_after": insert_after,
 	}
+
+def ensure_standard_vat_rate_registry():
+	# doctype may not be synced yet on fresh installs before migrate
+	if not frappe.db.exists("DocType", "Italy VAT Rate"):
+		return
+	from fab_italy_tax.vat_rates import ensure_standard_vat_rates, sync_vat_rate_templates
+
+	ensure_standard_vat_rates()
+	sync_vat_rate_templates()
