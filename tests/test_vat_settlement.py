@@ -49,11 +49,17 @@ def build_tax_configuration(**overrides):
 	return SimpleNamespace(**defaults)
 
 
+
+def build_journal_entry_stub(name):
+	entry = SimpleNamespace(name=name, insert=Mock(), submit=Mock(), accounts=[])
+	entry.append = lambda fieldname, row: entry.accounts.append(row)
+	return entry
+
 class TestVATSettlement(unittest.TestCase):
 	def test_post_vat_settlement_creates_payable_journal_entry(self):
 		document = build_vat_period()
 		configuration = build_tax_configuration()
-		entry = SimpleNamespace(name="ACC-JV-2026-00001", insert=Mock(), submit=Mock())
+		entry = build_journal_entry_stub("ACC-JV-2026-00001")
 
 		def get_doc_side_effect(doctype, name):
 			if doctype == "Italy Tax Configuration":
@@ -129,7 +135,7 @@ class TestVATSettlement(unittest.TestCase):
 	def test_post_vat_settlement_creates_credit_journal_entry(self):
 		document = build_vat_period(previous_credit_brought_forward=20.0)
 		configuration = build_tax_configuration()
-		entry = SimpleNamespace(name="ACC-JV-2026-00002", insert=Mock(), submit=Mock())
+		entry = build_journal_entry_stub("ACC-JV-2026-00002")
 
 		def get_doc_side_effect(doctype, name):
 			if doctype == "Italy Tax Configuration":

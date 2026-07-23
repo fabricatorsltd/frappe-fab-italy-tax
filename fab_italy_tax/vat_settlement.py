@@ -37,7 +37,8 @@ def post_vat_settlement(vat_period: str | Any):
 		document, "period_end_date"
 	)
 	entry.user_remark = build_settlement_remark(document)
-	entry.accounts = accounts
+	for account_row in accounts:
+		entry.append("accounts", account_row)
 
 	naming_series = str(get_document_value(configuration, "settlement_journal_naming_series") or "").strip()
 	if naming_series:
