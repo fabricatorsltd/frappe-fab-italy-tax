@@ -15,7 +15,23 @@ function refresh_competence_year_field(frm) {
 	}
 }
 
+function should_show_competence_intro(frm) {
+	// competence back to the prior year is a start-of-year concern (an invoice
+	// booked now for last year's cost): pointless mid year. Show it only in the
+	// first quarter, or when this invoice is already flagged to the prior year.
+	const invoiceYear = get_competence_year_options(frm)[0];
+	const carried =
+		frm.doc.fab_itx_competence_year && String(frm.doc.fab_itx_competence_year) !== invoiceYear;
+	const postingDate = frm.doc.posting_date || frappe.datetime.get_today();
+	const month = frappe.datetime.str_to_obj(postingDate).getMonth() + 1;
+	return Boolean(carried || month <= 3);
+}
+
 function set_competence_year_intro(frm) {
+	// frappe's show_message appends, so guard against a second box on re-refresh
+	if (frm.__fab_competence_intro_shown || !should_show_competence_intro(frm)) {
+		return;
+	}
 	const invoiceYear = get_competence_year_options(frm)[0];
 	const messages = [
 		__(
@@ -31,6 +47,7 @@ function set_competence_year_intro(frm) {
 		);
 	}
 	frm.set_intro(messages.join(" "), "blue");
+	frm.__fab_competence_intro_shown = true;
 }
 
 function refresh_purchase_deductibility_grid(frm) {
@@ -72,6 +89,7 @@ frappe.ui.form.on("Sales Invoice", {
 		setup_yearly_close_form(frm);
 	},
 	posting_date(frm) {
+		frm.__fab_competence_intro_shown = false;
 		refresh_competence_year_field(frm);
 	},
 });
@@ -81,6 +99,7 @@ frappe.ui.form.on("Purchase Invoice", {
 		setup_yearly_close_form(frm);
 	},
 	posting_date(frm) {
+		frm.__fab_competence_intro_shown = false;
 		refresh_competence_year_field(frm);
 	},
 });
