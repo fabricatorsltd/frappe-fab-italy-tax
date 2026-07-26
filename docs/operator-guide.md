@@ -31,6 +31,12 @@ overrides); disabling a rate disables its templates without deleting
 history. Do not hand-edit the generated templates: changes belong on the
 rate row.
 
+Known gap: the zero-rate natura templates (`IVA 0 N2.1`, `N1`, `N3.1`,
+`N3.2`) are generated without a Tax Exemption Reason on their tax row. A 0%
+invoice using one of these codes fails the e-invoicing validation until the
+reason (natura) is set on the template row. Set it before issuing exempt
+invoices; a future release should populate it from the rate's natura.
+
 ## Invoicing
 
 - Sales and purchase invoices pick up the Italian naming series managed by
