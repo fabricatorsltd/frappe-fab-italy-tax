@@ -50,6 +50,25 @@ STANDARD_VAT_RATES: tuple[dict[str, Any], ...] = (
 )
 
 
+# Maps a natura (N2.1, N3.2, ...) to the core Sales Taxes exemption reason
+# Select value, keyed by the code before the dot.
+NATURA_EXEMPTION = {
+	"N1": "N1-Escluse ex art. 15",
+	"N2": "N2-Non Soggette",
+	"N3": "N3-Non Imponibili",
+	"N4": "N4-Esenti",
+	"N5": "N5-Regime del margine / IVA non esposta in fattura",
+	"N6": "N6-Inversione Contabile",
+	"N7": "N7-IVA assolta in altro stato UE",
+}
+
+
+def exemption_reason_for(nature: str | None) -> str | None:
+	if not nature:
+		return None
+	return NATURA_EXEMPTION.get(nature.split(".")[0])
+
+
 def build_rate_key(applies_to: str, rate: float, nature: str | None, reverse_charge) -> str:
 	parts = ["S" if applies_to == "Sales" else "P"]
 	if reverse_charge:
@@ -108,6 +127,37 @@ def get_vat_companies() -> list[str]:
 	)
 
 
+def backfill_exemption_reasons():
+	"""Set the exemption reason on already-generated zero-rate natura Sales
+	templates; older templates were created without it and fail e-invoicing."""
+	companies = get_vat_companies()
+	if not companies:
+		return
+	rates = frappe.get_all(
+		"Italy VAT Rate", filters={"applies_to": "Sales", "rate": 0}, fields=["name", "nature"]
+	)
+	for rate in rates:
+		reason = exemption_reason_for(rate.nature)
+		if not reason:
+			continue
+		title = build_template_title(frappe.get_doc("Italy VAT Rate", rate.name))
+		for company in companies:
+			name = frappe.db.get_value(
+				"Sales Taxes and Charges Template", {"title": title, "company": company}, "name"
+			)
+			if not name:
+				continue
+			template = frappe.get_doc("Sales Taxes and Charges Template", name)
+			changed = False
+			for tax in template.taxes:
+				if not tax.rate and not tax.get("tax_exemption_reason"):
+					tax.tax_exemption_reason = reason
+					changed = True
+			if changed:
+				template.flags.ignore_permissions = True
+				template.save()
+
+
 def sync_vat_rate_templates(company: str | None = None):
 	companies = [company] if company else get_vat_companies()
 	rows = frappe.get_all("Italy VAT Rate", pluck="name")
@@ -162,14 +212,17 @@ def build_template_taxes(row, company: str, template_doctype: str) -> list[dict[
 	description = row.description or build_template_title(row)
 
 	if template_doctype == "Sales Taxes and Charges Template":
-		return [
-			{
-				"charge_type": "On Net Total",
-				"account_head": output_account,
-				"rate": row.rate,
-				"description": description,
-			}
-		]
+		tax = {
+			"charge_type": "On Net Total",
+			"account_head": output_account,
+			"rate": row.rate,
+			"description": description,
+		}
+		# a zero-rate natura line must carry its exemption reason for e-invoicing
+		reason = exemption_reason_for(row.nature)
+		if reason and not row.rate:
+			tax["tax_exemption_reason"] = reason
+		return [tax]
 
 	if row.reverse_charge:
 		# integrazione: same VAT both as input credit and output debt, net zero

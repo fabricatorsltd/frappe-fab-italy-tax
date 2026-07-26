@@ -310,7 +310,12 @@ def ensure_standard_vat_rate_registry():
 	# doctype may not be synced yet on fresh installs before migrate
 	if not frappe.db.exists("DocType", "Italy VAT Rate"):
 		return
-	from fab_italy_tax.vat_rates import ensure_standard_vat_rates, sync_vat_rate_templates
+	from fab_italy_tax.vat_rates import (
+		backfill_exemption_reasons,
+		ensure_standard_vat_rates,
+		sync_vat_rate_templates,
+	)
 
 	ensure_standard_vat_rates()
 	sync_vat_rate_templates()
+	backfill_exemption_reasons()
