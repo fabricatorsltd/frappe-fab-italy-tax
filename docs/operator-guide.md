@@ -31,11 +31,12 @@ overrides); disabling a rate disables its templates without deleting
 history. Do not hand-edit the generated templates: changes belong on the
 rate row.
 
-Known gap: the zero-rate natura templates (`IVA 0 N2.1`, `N1`, `N3.1`,
-`N3.2`) are generated without a Tax Exemption Reason on their tax row. A 0%
-invoice using one of these codes fails the e-invoicing validation until the
-reason (natura) is set on the template row. Set it before issuing exempt
-invoices; a future release should populate it from the rate's natura.
+The zero-rate natura templates (`IVA 0 N1`, `N2.1`, `N3.1`, `N3.2` and the
+rest of the matrix) carry the Tax Exemption Reason matching the rate's
+natura, sub-code included. SDI refuses a bare `N2`, `N3` or `N6`, so an
+e-invoice still holding one is blocked before it is sent. On a draft, switch
+the tax row to the option carrying the sub-code; on a submitted invoice the
+field is read only, so it has to be cancelled and amended.
 
 ## Invoicing
 

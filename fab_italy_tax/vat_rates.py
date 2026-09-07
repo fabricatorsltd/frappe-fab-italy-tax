@@ -50,23 +50,61 @@ STANDARD_VAT_RATES: tuple[dict[str, Any], ...] = (
 )
 
 
-# Maps a natura (N2.1, N3.2, ...) to the core Sales Taxes exemption reason
-# Select value, keyed by the code before the dot.
-NATURA_EXEMPTION = {
-	"N1": "N1-Escluse ex art. 15",
+# The three codes SDI has refused without a sub-code since 1 January 2021, as
+# ERPNext still spells them in the Sales Taxes exemption reason Select. They stay
+# selectable so rows booked before the sub-codes existed keep validating, and this
+# app never writes them.
+BARE_NATURA_EXEMPTION = {
 	"N2": "N2-Non Soggette",
 	"N3": "N3-Non Imponibili",
-	"N4": "N4-Esenti",
-	"N5": "N5-Regime del margine / IVA non esposta in fattura",
 	"N6": "N6-Inversione Contabile",
-	"N7": "N7-IVA assolta in altro stato UE",
+}
+
+
+# The exemption reason Select as we widen it, in FatturaPA order. The template in
+# erpnext/regional/italy/e-invoice.xml emits the stored value up to the first dash,
+# so an option written as "N2.1-..." is what puts the sub-code in <Natura>.
+TAX_EXEMPTION_REASONS: tuple[str, ...] = (
+	"N1-Escluse ex art. 15",
+	"N2-Non Soggette",
+	"N2.1-Non soggette ex artt. da 7 a 7-septies",
+	"N2.2-Non soggette, altri casi",
+	"N3-Non Imponibili",
+	"N3.1-Non imponibili, esportazioni",
+	"N3.2-Non imponibili, cessioni intracomunitarie",
+	"N3.3-Non imponibili, cessioni verso San Marino",
+	"N3.4-Non imponibili, operazioni assimilate alle cessioni all'esportazione",
+	"N3.5-Non imponibili, a seguito di dichiarazioni d'intento",
+	"N3.6-Non imponibili, altre operazioni che non concorrono al plafond",
+	"N4-Esenti",
+	"N5-Regime del margine / IVA non esposta in fattura",
+	"N6-Inversione Contabile",
+	"N6.1-Inversione contabile, cessione di rottami e altri materiali di recupero",
+	"N6.2-Inversione contabile, cessione di oro e argento puro",
+	"N6.3-Inversione contabile, subappalto nel settore edile",
+	"N6.4-Inversione contabile, cessione di fabbricati",
+	"N6.5-Inversione contabile, cessione di telefoni cellulari",
+	"N6.6-Inversione contabile, cessione di prodotti elettronici",
+	"N6.7-Inversione contabile, prestazioni comparto edile e settori connessi",
+	"N6.8-Inversione contabile, operazioni settore energetico",
+	"N6.9-Inversione contabile, altri casi",
+	"N7-IVA assolta in altro stato UE",
+)
+
+
+# Maps an Italy VAT Rate natura to the exemption reason Select value. The three
+# bare parents are left out on purpose so nothing generated here can emit them.
+NATURA_EXEMPTION = {
+	reason.split("-", 1)[0]: reason
+	for reason in TAX_EXEMPTION_REASONS
+	if reason.split("-", 1)[0] not in BARE_NATURA_EXEMPTION
 }
 
 
 def exemption_reason_for(nature: str | None) -> str | None:
 	if not nature:
 		return None
-	return NATURA_EXEMPTION.get(nature.split(".")[0])
+	return NATURA_EXEMPTION.get(nature)
 
 
 def build_rate_key(applies_to: str, rate: float, nature: str | None, reverse_charge) -> str:

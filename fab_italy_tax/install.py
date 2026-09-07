@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
+from frappe.custom.doctype.property_setter.property_setter import make_property_setter
 
 from fab_italy_tax.company_tax_settings import (
 	backfill_company_tax_fields,
@@ -15,6 +16,7 @@ from fab_italy_tax.yearly_close import backfill_invoice_competence_years
 
 def after_install():
 	ensure_custom_fields()
+	ensure_tax_exemption_reason_options()
 	sync_italy_invoice_naming_series()
 	backfill_company_tax_fields()
 	backfill_invoice_competence_years()
@@ -26,6 +28,7 @@ def after_install():
 
 def after_migrate():
 	ensure_custom_fields()
+	ensure_tax_exemption_reason_options()
 	sync_italy_invoice_naming_series()
 	backfill_company_tax_fields()
 	backfill_invoice_competence_years()
@@ -37,6 +40,34 @@ def after_migrate():
 
 def ensure_custom_fields():
 	create_custom_fields(get_custom_fields(), update=True)
+
+
+def ensure_tax_exemption_reason_options():
+	"""Widen the Natura Select so the FatturaPA sub-codes can be stored.
+
+	ERPNext offers only the first level codes, and SDI has refused N2, N3 and N6
+	without a sub-code since 1 January 2021. A Property Setter is applied after the
+	custom fields when the meta is built, so it outlives both an ERPNext upgrade and
+	a re-run of the Italian regional setup, which owns that field.
+	"""
+	from fab_italy_tax.vat_rates import TAX_EXEMPTION_REASONS
+
+	doctype, fieldname = "Sales Taxes and Charges", "tax_exemption_reason"
+	if not frappe.db.exists("Custom Field", f"{doctype}-{fieldname}"):
+		return
+
+	options = "\n" + "\n".join(TAX_EXEMPTION_REASONS)
+	current = frappe.db.get_value(
+		"Property Setter",
+		{"doc_type": doctype, "field_name": fieldname, "property": "options"},
+		"value",
+	)
+	if current == options:
+		return
+
+	make_property_setter(
+		doctype, fieldname, "options", options, "Text", validate_fields_for_doctype=False
+	)
 
 
 def get_custom_fields() -> dict[str, list[dict[str, object]]]:
