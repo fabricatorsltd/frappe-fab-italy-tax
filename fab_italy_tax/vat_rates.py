@@ -203,6 +203,43 @@ def sync_vat_rate_templates(company: str | None = None):
 		row = frappe.get_doc("Italy VAT Rate", name)
 		for target in companies:
 			sync_templates_for_company(row, target)
+	for target in companies:
+		ensure_default_tax_templates(target)
+
+
+STANDARD_RATE = 22
+
+
+def ensure_default_tax_templates(company: str):
+	"""Point the default of each template doctype at an enabled template.
+
+	ERPNext seeds "Italy VAT 22%" as the default for a new Italian company. Once it
+	is disabled in favour of the registry templates, every invoice written by hand
+	still starts from it and refuses to save: the default moves to the standard rate.
+	"""
+	for applies_to, template_doctype in (
+		("Sales", "Sales Taxes and Charges Template"),
+		("Purchase", "Purchase Taxes and Charges Template"),
+	):
+		for name in frappe.get_all(
+			template_doctype, filters={"company": company, "is_default": 1, "disabled": 1}, pluck="name"
+		):
+			frappe.db.set_value(template_doctype, name, "is_default", 0, update_modified=False)
+
+		if frappe.db.exists(template_doctype, {"company": company, "is_default": 1, "disabled": 0}):
+			continue
+
+		standard = frappe.db.get_value(
+			"Italy VAT Rate",
+			{"applies_to": applies_to, "rate": STANDARD_RATE, "nature": ("in", ("", None)), "reverse_charge": 0, "enabled": 1},
+			"name",
+		)
+		if not standard:
+			continue
+		title = build_template_title(frappe.get_doc("Italy VAT Rate", standard))
+		template = frappe.db.get_value(template_doctype, {"title": title, "company": company, "disabled": 0}, "name")
+		if template:
+			frappe.db.set_value(template_doctype, template, "is_default", 1, update_modified=False)
 
 
 def sync_vat_rate_templates_for_rate(row):
