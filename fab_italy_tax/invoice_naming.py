@@ -9,6 +9,10 @@ SALES_INVOICE_SERIES = "FATT/.YYYY./.#####"
 SALES_CREDIT_NOTE_SERIES = "NDC/.YYYY./.#####"
 PURCHASE_INVOICE_SERIES = "ACQ/.YYYY./.#####"
 PURCHASE_CREDIT_NOTE_SERIES = "RACQ/.YYYY./.#####"
+QUOTATION_SERIES = "OFF/.YYYY./.#####"
+SALES_ORDER_SERIES = "ORD/.YYYY./.#####"
+DELIVERY_NOTE_SERIES = "DDT/.YYYY./.#####"
+DELIVERY_NOTE_RETURN_SERIES = "RDDT/.YYYY./.#####"
 
 SERIES_CONFIG = {
 	"Sales Invoice": {
@@ -21,14 +25,33 @@ SERIES_CONFIG = {
 		"invoice": PURCHASE_INVOICE_SERIES,
 		"return": PURCHASE_CREDIT_NOTE_SERIES,
 	},
+	"Quotation": {
+		"default": QUOTATION_SERIES,
+		"invoice": QUOTATION_SERIES,
+	},
+	"Sales Order": {
+		"default": SALES_ORDER_SERIES,
+		"invoice": SALES_ORDER_SERIES,
+	},
+	"Delivery Note": {
+		"default": DELIVERY_NOTE_SERIES,
+		"invoice": DELIVERY_NOTE_SERIES,
+		"return": DELIVERY_NOTE_RETURN_SERIES,
+	},
 }
 
 
 def sync_italy_invoice_naming_series() -> None:
 	for doctype, config in SERIES_CONFIG.items():
-		options = "\n".join([config["invoice"], config["return"]])
-		ensure_property_setter(doctype, "naming_series", "options", options)
+		ensure_property_setter(doctype, "naming_series", "options", get_series_options(config))
 		ensure_property_setter(doctype, "naming_series", "default", config["default"])
+
+
+def get_series_options(config: dict[str, str]) -> str:
+	series = [config["invoice"]]
+	if config.get("return"):
+		series.append(config["return"])
+	return "\n".join(series)
 
 
 def apply_italy_invoice_naming_series(document: Any, method: str | None = None) -> None:
@@ -44,7 +67,11 @@ def apply_italy_invoice_naming_series(document: Any, method: str | None = None) 
 	if has_persisted_name(document):
 		return
 
-	expected_series = config["return"] if cint(get_document_value(document, "is_return")) else config["invoice"]
+	return_series = config.get("return")
+	expected_series = config["invoice"]
+	if return_series and cint(get_document_value(document, "is_return")):
+		expected_series = return_series
+
 	current_series = cstr(get_document_value(document, "naming_series")).strip()
 	if current_series != expected_series:
 		set_document_value(document, "naming_series", expected_series)

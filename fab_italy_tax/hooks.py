@@ -166,6 +166,15 @@ doc_events = {
 		"on_update_after_submit": "fab_italy_tax.yearly_close.sync_invoice_competence_entries",
 		"on_cancel": "fab_italy_tax.yearly_close.cancel_linked_competence_entries",
 	},
+	"Quotation": {
+		"before_naming": "fab_italy_tax.invoice_naming.apply_italy_invoice_naming_series",
+	},
+	"Sales Order": {
+		"before_naming": "fab_italy_tax.invoice_naming.apply_italy_invoice_naming_series",
+	},
+	"Delivery Note": {
+		"before_naming": "fab_italy_tax.invoice_naming.apply_italy_invoice_naming_series",
+	},
 	"VAT Period": {
 		"on_update": "fab_italy_tax.tax_calendar.sync_vat_period_tax_calendar_event",
 	},
