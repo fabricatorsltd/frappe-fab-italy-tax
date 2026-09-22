@@ -10,7 +10,20 @@ from fab_italy_tax.cashflow import (
 	build_party_cash_flow_row,
 	convert_to_company_currency,
 	get_company_cash_flow,
+	get_receivable_cash_flow_rows,
+	get_split_payment_expected_cash,
 )
+
+
+def build_receivable_get_all(documents, invoices):
+	def get_all(doctype, **kwargs):
+		if doctype != "Sales Invoice":
+			raise AssertionError(f"Unexpected get_all call: {doctype}")
+		if "vat_collectability" in kwargs.get("fields", []):
+			return invoices
+		return documents
+
+	return get_all
 
 
 class TestCashFlow(unittest.TestCase):
@@ -116,3 +129,115 @@ class TestCashFlow(unittest.TestCase):
 		self.assertEqual(rows[0]["projected_balance"], 200.0)
 		self.assertEqual(rows[1]["projected_balance"], 322.0)
 		self.assertEqual(rows[2]["projected_balance"], 272.0)
+
+
+	def test_receivable_row_of_a_fully_outstanding_split_payment_invoice_drops_the_vat(self):
+		frappe_stub = SimpleNamespace(
+			get_all=build_receivable_get_all(
+				documents=[
+					{
+						"name": "FATT/2026/00035",
+						"customer": "COMUNE DI POMPIANO",
+						"due_date": "2026-05-31",
+						"outstanding_amount": 3013.40,
+						"currency": "EUR",
+						"conversion_rate": 1.0,
+					}
+				],
+				invoices=[
+					{
+						"name": "FATT/2026/00035",
+						"vat_collectability": "S-Scissione dei Pagamenti",
+						"total_taxes_and_charges": 543.40,
+					}
+				],
+			)
+		)
+
+		with patch("fab_italy_tax.cashflow.frappe", new=frappe_stub):
+			rows = get_receivable_cash_flow_rows(
+				company="Fabricators",
+				company_currency="EUR",
+				start_date="2026-05-01",
+				end_date="2026-06-30",
+				include_overdue=True,
+			)
+
+		self.assertEqual(len(rows), 1)
+		self.assertEqual(rows[0]["inflow_amount"], 2470.0)
+		self.assertEqual(rows[0]["source_amount"], 2470.0)
+
+	def test_receivable_row_of_a_partly_paid_split_payment_invoice_keeps_only_the_net_left(self):
+		frappe_stub = SimpleNamespace(
+			get_all=build_receivable_get_all(
+				documents=[
+					{
+						"name": "FATT/2026/00035",
+						"customer": "COMUNE DI POMPIANO",
+						"due_date": "2026-05-31",
+						"outstanding_amount": 1513.40,
+						"currency": "EUR",
+						"conversion_rate": 1.0,
+					}
+				],
+				invoices=[
+					{
+						"name": "FATT/2026/00035",
+						"vat_collectability": "S-Scissione dei Pagamenti",
+						"total_taxes_and_charges": 543.40,
+					}
+				],
+			)
+		)
+
+		with patch("fab_italy_tax.cashflow.frappe", new=frappe_stub):
+			rows = get_receivable_cash_flow_rows(
+				company="Fabricators",
+				company_currency="EUR",
+				start_date="2026-05-01",
+				end_date="2026-06-30",
+				include_overdue=True,
+			)
+
+		self.assertEqual(rows[0]["inflow_amount"], 970.0)
+
+	def test_receivable_row_of_an_ordinary_invoice_keeps_the_gross_outstanding(self):
+		frappe_stub = SimpleNamespace(
+			get_all=build_receivable_get_all(
+				documents=[
+					{
+						"name": "FATT/2026/00036",
+						"customer": "TEST SDI SRL",
+						"due_date": "2026-05-31",
+						"outstanding_amount": 122.0,
+						"currency": "EUR",
+						"conversion_rate": 1.0,
+					}
+				],
+				invoices=[
+					{
+						"name": "FATT/2026/00036",
+						"vat_collectability": "I-Immediata",
+						"total_taxes_and_charges": 22.0,
+					}
+				],
+			)
+		)
+
+		with patch("fab_italy_tax.cashflow.frappe", new=frappe_stub):
+			rows = get_receivable_cash_flow_rows(
+				company="Fabricators",
+				company_currency="EUR",
+				start_date="2026-05-01",
+				end_date="2026-06-30",
+				include_overdue=True,
+			)
+
+		self.assertEqual(rows[0]["inflow_amount"], 122.0)
+
+	def test_split_payment_credit_note_gives_back_the_taxable_amount_only(self):
+		self.assertEqual(get_split_payment_expected_cash(-3013.40, -543.40), -2470.0)
+
+	def test_split_payment_outstanding_down_to_vat_only_expects_no_cash(self):
+		self.assertEqual(get_split_payment_expected_cash(543.40, 543.40), 0.0)
+		self.assertEqual(get_split_payment_expected_cash(300.0, 543.40), 0.0)

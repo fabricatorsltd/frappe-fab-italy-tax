@@ -11,6 +11,7 @@ from fab_italy_tax.labor_costs import (
 	EMPLOYEE_COST_ENTRY_SOURCE_MODE,
 	get_employee_cost_cash_planning,
 )
+from fab_italy_tax.vat_period_calculation import is_split_payment
 
 OPENING_BALANCE_EVENT_TYPE = "Opening Balance"
 RECEIVABLE_EVENT_TYPE = "Receivable Due"
@@ -151,6 +152,8 @@ def get_receivable_cash_flow_rows(
 		],
 		order_by="due_date asc, name asc",
 	)
+	split_payment_vat = get_split_payment_vat_by_invoice([row.get("name") for row in documents])
+	expected = [apply_split_payment_expectation(row, split_payment_vat) for row in documents]
 	return [
 		build_party_cash_flow_row(
 			document=row,
@@ -162,8 +165,60 @@ def get_receivable_cash_flow_rows(
 			party=row.get("customer"),
 			direction="Inflow",
 		)
-		for row in documents
+		for row in expected
+		if flt(row.get("outstanding_amount"))
 	]
+
+
+def get_split_payment_vat_by_invoice(invoice_names) -> dict[str, float]:
+	"""VAT of each split payment invoice among invoice_names, keyed by invoice.
+
+	Collectability is read through the helper the periodic settlement already uses,
+	so the rule stays defined once.
+	"""
+	names = sorted({str(name or "").strip() for name in invoice_names if str(name or "").strip()})
+	if not names:
+		return {}
+
+	invoices = frappe.get_all(
+		"Sales Invoice",
+		filters={"name": ("in", names)},
+		fields=["name", "vat_collectability", "total_taxes_and_charges"],
+	)
+	return {
+		str(invoice.get("name") or "").strip(): flt(invoice.get("total_taxes_and_charges"))
+		for invoice in invoices
+		if is_split_payment(invoice)
+	}
+
+
+def get_split_payment_expected_cash(outstanding_amount: Any, total_taxes_and_charges: Any) -> float:
+	"""Cash still expected from a split payment invoice: outstanding less its VAT.
+
+	The public administration pays the taxable amount only and remits the VAT to the
+	Treasury itself (art. 17-ter DPR 633/72), so whatever stays outstanding beyond
+	the taxable amount is cleared by a deduction and never arrives as cash: it is cut
+	off at zero. A credit note keeps its own sign, giving back the taxable amount
+	rather than the gross.
+	"""
+	outstanding = flt(outstanding_amount)
+	expected = outstanding - flt(total_taxes_and_charges)
+	return round(min(expected, 0.0) if outstanding < 0 else max(expected, 0.0), 2)
+
+
+def apply_split_payment_expectation(
+	document: dict[str, Any], split_payment_vat: dict[str, float]
+) -> dict[str, Any]:
+	name = str(document.get("name") or "").strip()
+	if name not in split_payment_vat:
+		return document
+
+	return {
+		**document,
+		"outstanding_amount": get_split_payment_expected_cash(
+			document.get("outstanding_amount"), split_payment_vat[name]
+		),
+	}
 
 
 def get_payable_cash_flow_rows(
