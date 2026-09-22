@@ -90,5 +90,9 @@ matching F24 Deadline event as paid.
   the ones the templates post to. The aggregation also counts sales and
   purchase invoice postings only, so VAT moved by journal entry stays out
   of the automatic totals (book it as a VAT Adjustment instead).
+- An invoice is missing from output VAT: invoices with VAT Collectability
+  set to S (split payment, art. 17-ter DPR 633/72) are left out on purpose,
+  whatever tax account they posted to. The customer pays that VAT to the
+  Treasury, so it is not ours to settle.
 - A period is missing: check the first managed period start date and that
   the configuration is enabled.

@@ -79,7 +79,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "description": "Used only when posting the VAT settlement entry. Sales VAT is aggregated from all Tax accounts on Sales Invoices.",
+   "description": "Used only when posting the VAT settlement entry. Sales VAT is aggregated from all Tax accounts on Sales Invoices, except invoices under split payment.",
    "fieldname": "vat_output_account",
    "fieldtype": "Link",
    "label": "VAT Output Account",

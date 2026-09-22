@@ -16,6 +16,7 @@ from fab_italy_tax.fab_italy_tax.doctype.vat_adjustment.vat_adjustment import (
 
 SALES_VAT_SOURCE_DOCTYPES = {"Sales Invoice"}
 PURCHASE_VAT_SOURCE_DOCTYPES = {"Purchase Invoice"}
+SPLIT_PAYMENT_COLLECTABILITY_CODE = "S"
 
 
 def calculate_vat_period(vat_period: str | Any) -> dict[str, float]:
@@ -82,11 +83,12 @@ def build_vat_period_totals(
 ) -> dict[str, float]:
 	previous_credit_brought_forward = flt(get_document_value(document, "previous_credit_brought_forward"))
 	tax_accounts = get_tax_account_names(row.get("account") for row in gl_entries)
+	split_payment_invoices = get_split_payment_invoices(gl_entries)
 	output_vat_total = round_amount(
 		sum(
 			flt(row.get("credit")) - flt(row.get("debit"))
 			for row in gl_entries
-			if is_output_vat_entry(row, tax_accounts)
+			if is_output_vat_entry(row, tax_accounts, split_payment_invoices)
 		)
 	)
 	input_vat_total = round_amount(
@@ -136,10 +138,45 @@ def get_tax_account_names(account_names) -> set[str]:
 	)
 
 
-def is_output_vat_entry(row: dict[str, Any], tax_accounts: set[str]) -> bool:
+def get_split_payment_invoices(gl_entries: list[dict[str, Any]]) -> set[str]:
+	"""Sales invoices and credit notes settled under split payment.
+
+	The customer pays us the taxable amount only and remits the VAT to the Treasury
+	himself (art. 17-ter DPR 633/72), so that VAT is never a debt of ours. Invoices are
+	matched on their collectability, not on the tax account, because invoices issued
+	before the dedicated account existed still posted to the regular output VAT one.
+	"""
+	invoice_names = sorted(
+		{
+			str(row.get("voucher_no") or "").strip()
+			for row in gl_entries
+			if str(row.get("voucher_type") or "").strip() in SALES_VAT_SOURCE_DOCTYPES
+			and str(row.get("voucher_no") or "").strip()
+		}
+	)
+	if not invoice_names:
+		return set()
+
+	invoices = frappe.get_all(
+		"Sales Invoice",
+		filters={"name": ("in", invoice_names)},
+		fields=["name", "vat_collectability"],
+	)
+	return {str(invoice.get("name") or "").strip() for invoice in invoices if is_split_payment(invoice)}
+
+
+def is_split_payment(invoice: Any) -> bool:
+	collectability = str(get_document_value(invoice, "vat_collectability") or "").strip()
+	return collectability[:1].upper() == SPLIT_PAYMENT_COLLECTABILITY_CODE
+
+
+def is_output_vat_entry(
+	row: dict[str, Any], tax_accounts: set[str], split_payment_invoices: set[str]
+) -> bool:
 	return (
 		str(row.get("account") or "").strip() in tax_accounts
 		and str(row.get("voucher_type") or "").strip() in SALES_VAT_SOURCE_DOCTYPES
+		and str(row.get("voucher_no") or "").strip() not in split_payment_invoices
 	)
 
 
