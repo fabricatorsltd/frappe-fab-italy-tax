@@ -1,7 +1,7 @@
 {
  "app": "fab_italy_tax",
  "charts": [],
- "content": "[{\"id\":\"fab_italy_tax_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Italy Tax</span>\",\"col\":12}},{\"id\":\"fab_italy_tax_shortcut_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Italy Tax Configuration\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VAT Periods\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VAT Adjustments\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tax Calendar Events\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Cost Cash Planning\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Company Cash Flow Monitor\",\"col\":3}}]",
+ "content": "[{\"id\":\"fab_italy_tax_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Italy Tax</span>\",\"col\":12}},{\"id\":\"fab_italy_tax_shortcut_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Italy Tax Configuration\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VAT Periods\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"VAT Adjustments\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Tax Calendar Events\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Employee Cost Cash Planning\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Company Cash Flow Monitor\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Two-sided Trial Balance\",\"col\":3}},{\"id\":\"fab_italy_tax_shortcut_8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Trial Balance Print Settings\",\"col\":3}}]",
  "creation": "2026-04-27 06:10:00.000000",
  "custom_blocks": [],
  "docstatus": 0,
@@ -14,7 +14,7 @@
  "is_hidden": 0,
  "label": "Italy Tax",
  "links": [],
- "modified": "2026-04-27 06:10:00.000000",
+ "modified": "2026-11-10 10:00:00.000000",
  "modified_by": "Administrator",
  "module": "Fab Italy Tax",
  "name": "Italy Tax",
@@ -73,6 +73,20 @@
    "link_to": "Company Cash Flow Monitor",
    "report_ref_doctype": "Company",
    "type": "Report"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "",
+   "label": "Two-sided Trial Balance",
+   "link_to": "two-sided-trial-balance",
+   "type": "Page"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "",
+   "label": "Trial Balance Print Settings",
+   "link_to": "Trial Balance Print Settings",
+   "type": "DocType"
   }
  ],
  "title": "Italy Tax",

@@ -82,6 +82,21 @@ matching F24 Deadline event as paid.
   payroll, tagged accounting entries, manual adjustments, or
   `fab_hr_italy` Employee Cost Entries depending on the configured mode.
 - Italian Yearly Balance: year view driven by the competence year handling.
+- Two-sided Trial Balance (workspace link, desk page): a PDF with the
+  balance sheet (assets against liabilities) and the profit and loss (costs
+  against revenues) side by side, grouped by the account tree, for a
+  company and a fiscal year or date range, optionally by cost center and
+  finance book. Balance sheet accounts show the closing balance at the end
+  date, profit and loss accounts the movement of the period, before any
+  Period Closing Voucher of that period (so equity can differ from
+  ERPNext's Balance Sheet for a closed period; the result line squares it).
+  The result matches ERPNext's Profit and Loss for the same filters; the
+  open result of earlier fiscal years, and of the same year before the
+  start date, prints on its own line. Letter Head, logo, accent color,
+  font, title, group level and zero lines are set in Trial Balance Print
+  Settings. The PDF engine is the site config key
+  `trial_balance_pdf_generator` (for example `chrome`), else Print
+  Settings.
 
 ## Troubleshooting
 

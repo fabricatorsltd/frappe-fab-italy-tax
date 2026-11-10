@@ -599,3 +599,303 @@ msgstr ""
 msgid "{0} must belong to company {1}."
 msgstr ""
 
+#. Label of the accent_color (Color) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Accent Color"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.py:13
+msgid "Accent Color must be a hex color such as #6f8aa0."
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:142
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:143
+msgctxt "trial_balance"
+msgid "Account"
+msgstr ""
+
+#. Description of the 'Group Level' (Int) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Account tree level printed as the bold group line. 0 = the parent group of each account; 1 = the first level below the root, 2 = the next one, and so on."
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:142
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:143
+msgctxt "trial_balance"
+msgid "Amount"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:365
+msgctxt "trial_balance"
+msgid "Assets"
+msgstr ""
+
+#. Description of the 'Accent Color' (Color) field in DocType 'Trial Balance
+#. Print Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Background of the column headers band."
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/page/two_sided_trial_balance/two_sided_trial_balance.js:11
+msgid "Balance sheet and profit and loss side by side, grouped by the account tree, as a PDF. Layout and branding are in Trial Balance Print Settings."
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:364
+#, python-brace-format
+msgctxt "trial_balance"
+msgid "Balance sheet from {0} to {1}"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:164
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:165
+msgctxt "trial_balance"
+msgid "Balancing total"
+msgstr ""
+
+#. Label of the branding_section (Section Break) field in DocType 'Trial
+#. Balance Print Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Branding"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:97
+msgctxt "trial_balance"
+msgid "Company"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:116
+msgctxt "trial_balance"
+msgid "Continued..."
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:108
+msgctxt "trial_balance"
+msgid "Cost Center"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:372
+msgctxt "trial_balance"
+msgid "Costs"
+msgstr ""
+
+#. Description of the 'Font Family' (Data) field in DocType 'Trial Balance
+#. Print Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "CSS font family, for example Lato. Arial, Helvetica and sans-serif are always added as fallback."
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:142
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:143
+msgctxt "trial_balance"
+msgid "Description"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:172
+msgctxt "trial_balance"
+msgid "End of report"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:108
+msgctxt "trial_balance"
+msgid "Finance Book"
+msgstr ""
+
+#. Label of the font_family (Data) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Font Family"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.py:15
+msgid "Font Family must be a plain CSS font family list."
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:54
+msgid "From Date must be before To Date"
+msgstr ""
+
+#. Label of the group_level (Int) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Group Level"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.py:17
+msgid "Group Level cannot be negative."
+msgstr ""
+
+#. Label of the hide_zero_lines (Check) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Hide Zero Lines"
+msgstr ""
+
+#. Description of the 'Report Title' (Data) field in DocType 'Trial Balance
+#. Print Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Leave empty for the translated default \"Trial balance\"."
+msgstr ""
+
+#. Label of the letter_head_height (Int) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Letter Head Height (mm)"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:366
+msgctxt "trial_balance"
+msgid "Liabilities"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:248
+msgctxt "trial_balance"
+msgid "Loss for the period"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:150
+msgctxt "trial_balance"
+msgid "No balances in this period"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:94
+msgctxt "trial_balance"
+msgid "Page"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:103
+msgctxt "trial_balance"
+msgid "Period"
+msgstr ""
+
+#: fab_italy_tax/templates/trial_balance/two_sided_trial_balance.html:99
+msgctxt "trial_balance"
+msgid "Print date"
+msgstr ""
+
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.js:3
+#: fab_italy_tax/fab_italy_tax/page/two_sided_trial_balance/two_sided_trial_balance.js:7
+#: fab_italy_tax/fab_italy_tax/page/two_sided_trial_balance/two_sided_trial_balance.js:21
+msgid "Print two-sided trial balance"
+msgstr ""
+
+#. Description of the 'Logo' (Attach Image) field in DocType 'Trial Balance
+#. Print Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Printed next to the title when no Letter Head is set."
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:253
+msgctxt "trial_balance"
+msgid "Prior years loss not closed"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:252
+msgctxt "trial_balance"
+msgid "Prior years profit not closed"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:371
+#, python-brace-format
+msgctxt "trial_balance"
+msgid "Profit and loss from {0} to {1}"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:247
+msgctxt "trial_balance"
+msgid "Profit for the period"
+msgstr ""
+
+#. Label of the report_title (Data) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Report Title"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:373
+msgctxt "trial_balance"
+msgid "Revenues"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:50
+msgid "Select a Fiscal Year or both From Date and To Date."
+msgstr ""
+
+#. Label of the show_address (Check) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Show Company Address"
+msgstr ""
+
+#. Label of the show_tax_id (Check) field in DocType 'Trial Balance Print
+#. Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Show Tax ID and Fiscal Code"
+msgstr ""
+
+#. Description of the 'Letter Head Height (mm)' (Int) field in DocType 'Trial
+#. Balance Print Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "Space reserved for the Letter Head header on each page."
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:367
+msgctxt "trial_balance"
+msgid "Total assets"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:374
+msgctxt "trial_balance"
+msgid "Total costs"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:368
+msgctxt "trial_balance"
+msgid "Total liabilities"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:375
+msgctxt "trial_balance"
+msgid "Total revenues"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:388
+#: fab_italy_tax/trial_balance_print.py:457
+msgctxt "trial_balance"
+msgid "Trial balance"
+msgstr ""
+
+#. Name of a DocType
+#. Label of a shortcut in the Italy Tax Workspace
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+#: fab_italy_tax/fab_italy_tax/workspace/fab_italy_tax/fab_italy_tax.json
+msgid "Trial Balance Print Settings"
+msgstr ""
+
+#. Label of a shortcut in the Italy Tax Workspace
+#: fab_italy_tax/fab_italy_tax/page/two_sided_trial_balance/two_sided_trial_balance.js:4
+#: fab_italy_tax/fab_italy_tax/workspace/fab_italy_tax/fab_italy_tax.json
+msgid "Two-sided Trial Balance"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:257
+msgctxt "trial_balance"
+msgid "Unbalanced difference"
+msgstr ""
+
+#. Description of the 'Letter Head' (Link) field in DocType 'Trial Balance
+#. Print Settings'
+#: fab_italy_tax/fab_italy_tax/doctype/trial_balance_print_settings/trial_balance_print_settings.json
+msgid "When set, the Letter Head header and footer are printed on every page."
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:281
+msgctxt "trial_balance"
+msgid "Loss of the year before the period"
+msgstr ""
+
+#: fab_italy_tax/trial_balance_print.py:280
+msgctxt "trial_balance"
+msgid "Profit of the year before the period"
+msgstr ""

@@ -1,0 +1,142 @@
+{
+ "actions": [],
+ "creation": "2026-11-10 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "branding_section",
+  "letter_head",
+  "letter_head_height",
+  "logo",
+  "column_break_branding",
+  "accent_color",
+  "font_family",
+  "report_title",
+  "content_section",
+  "show_tax_id",
+  "show_address",
+  "column_break_content",
+  "group_level",
+  "hide_zero_lines"
+ ],
+ "fields": [
+  {
+   "fieldname": "branding_section",
+   "fieldtype": "Section Break",
+   "label": "Branding"
+  },
+  {
+   "fieldname": "letter_head",
+   "fieldtype": "Link",
+   "label": "Letter Head",
+   "options": "Letter Head",
+   "description": "When set, the Letter Head header and footer are printed on every page."
+  },
+  {
+   "default": "25",
+   "depends_on": "letter_head",
+   "fieldname": "letter_head_height",
+   "fieldtype": "Int",
+   "label": "Letter Head Height (mm)",
+   "description": "Space reserved for the Letter Head header on each page."
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo",
+   "description": "Printed next to the title when no Letter Head is set."
+  },
+  {
+   "fieldname": "column_break_branding",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "#6f8aa0",
+   "fieldname": "accent_color",
+   "fieldtype": "Color",
+   "label": "Accent Color",
+   "description": "Background of the column headers band."
+  },
+  {
+   "fieldname": "font_family",
+   "fieldtype": "Data",
+   "label": "Font Family",
+   "description": "CSS font family, for example Lato. Arial, Helvetica and sans-serif are always added as fallback."
+  },
+  {
+   "fieldname": "report_title",
+   "fieldtype": "Data",
+   "label": "Report Title",
+   "description": "Leave empty for the translated default \"Trial balance\"."
+  },
+  {
+   "fieldname": "content_section",
+   "fieldtype": "Section Break",
+   "label": "Content"
+  },
+  {
+   "default": "1",
+   "fieldname": "show_tax_id",
+   "fieldtype": "Check",
+   "label": "Show Tax ID and Fiscal Code"
+  },
+  {
+   "default": "1",
+   "fieldname": "show_address",
+   "fieldtype": "Check",
+   "label": "Show Company Address"
+  },
+  {
+   "fieldname": "column_break_content",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "group_level",
+   "fieldtype": "Int",
+   "label": "Group Level",
+   "description": "Account tree level printed as the bold group line. 0 = the parent group of each account; 1 = the first level below the root, 2 = the next one, and so on."
+  },
+  {
+   "default": "1",
+   "fieldname": "hide_zero_lines",
+   "fieldtype": "Check",
+   "label": "Hide Zero Lines"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-11-10 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Fab Italy Tax",
+ "name": "Trial Balance Print Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "read": 1,
+   "print": 1,
+   "email": 1,
+   "write": 1,
+   "create": 1,
+   "role": "System Manager"
+  },
+  {
+   "read": 1,
+   "print": 1,
+   "email": 1,
+   "write": 1,
+   "create": 1,
+   "role": "Accounts Manager"
+  },
+  {
+   "read": 1,
+   "print": 1,
+   "email": 1,
+   "role": "Accounts User"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

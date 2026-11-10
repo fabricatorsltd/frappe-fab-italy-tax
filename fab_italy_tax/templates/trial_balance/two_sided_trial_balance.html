@@ -1,0 +1,183 @@
+<!doctype html>
+{#- Two-sided trial balance. Rendered by fab_italy_tax.trial_balance_print through the Frappe
+    PDF pipeline: #header-html and #footer-html become the page header and footer. -#}
+{%- macro side_cells(items, right=False) -%}
+	{#- one div per printed line, so a group header and its first account share a row -#}
+	{%- set sep = " sep" if right else "" -%}
+	<td class="code{{ sep }}">{% for kind, value in items %}<div class="ln{{ ' g' if kind == 'group' }}">{% if kind in ("group", "line") and value.number %}{{ value.number|e }}{% else %}&nbsp;{% endif %}</div>{% endfor %}</td>
+	<td class="name">{% for kind, value in items %}<div class="ln{{ ' g' if kind == 'group' }}">{% if kind in ("group", "line") %}{{ value.name|e }}{% else %}&nbsp;{% endif %}</div>{% endfor %}</td>
+	<td class="num">{% for kind, value in items %}<div class="ln{{ ' g' if kind == 'group' }}">{% if kind == "group" %}{{ amount(value.total) }}{% elif kind == "line" %}{{ amount(value.amount) }}{% else %}&nbsp;{% endif %}</div>{% endfor %}</td>
+{%- endmacro -%}
+{%- macro result_cells(item, right=False) -%}
+	{%- set sep = " sep" if right else "" -%}
+	{%- if item -%}
+		<td class="name lbl{{ sep }}" colspan="2">{{ item[0]|e }}</td><td class="num">{{ amount(item[1]) }}</td>
+	{%- else -%}
+		<td class="name{{ sep }}" colspan="2"></td><td class="num"></td>
+	{%- endif -%}
+{%- endmacro -%}
+{%- macro colgroup() -%}
+	<colgroup><col class="c-code"><col class="c-name"><col class="c-num"><col class="c-code"><col class="c-name"><col class="c-num"></colgroup>
+{%- endmacro -%}
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="pdf-title" content="{{ title|e }} {{ period_from|e }} - {{ period_to|e }}">
+<meta name="pdf-author" content="{{ company.name|e }}">
+<title>{{ title|e }}</title>
+<style>
+	{%- if wkhtmltopdf %}
+	{#- wkhtmltopdf prints header and footer inside the page margins and pads them by 15mm -#}
+	.print-format { margin-top: {{ ((header_height * 25.4 / 96) + 19)|round(1) }}mm; margin-bottom: {{ ((footer_height * 25.4 / 96) + 22)|round(1) }}mm; margin-left: 10mm; margin-right: 10mm; page-size: A4; header-spacing: 2; }
+	{%- else %}
+	{#- Chrome measures header and footer and adds them to these margins -#}
+	.print-format { margin-top: 4mm; margin-bottom: 4mm; margin-left: 10mm; margin-right: 10mm; page-size: A4; header-spacing: 2; footer-spacing: 2; }
+	{%- endif %}
+	div.print-format { margin: 0 !important; padding: 0 !important; }
+	html, body { margin: 0; padding: 0; background: #fff; }
+	body, #header-html, #footer-html { font-family: {{ font_family }}; color: #222; font-size: 7.5pt; line-height: 1.35; }
+	#header-html, #footer-html { display: none; }
+
+	.hd { box-sizing: border-box; height: {{ header_height }}px; overflow: hidden; white-space: nowrap; }
+	.hd .lh { height: {{ letter_head_height }}mm; overflow: hidden; }
+	.hd .lh img { max-height: {{ letter_head_height }}mm; }
+	table.hrow { width: 100%; border-collapse: collapse; table-layout: auto; }
+	table.hrow td { padding: 0; height: 15px; vertical-align: middle; white-space: nowrap; }
+	table.hrow tr.first td { height: 22px; }
+	table.hrow td.r { text-align: right; }
+	.hd .ttl { font-size: 10pt; font-weight: 700; color: {{ accent }}; text-transform: uppercase; }
+	.hd .ttl img { height: 18px; width: auto; margin-right: 8px; vertical-align: middle; }
+	.hd .k { font-weight: 700; margin-right: 4px; }
+	.hd .co { font-weight: 700; font-size: 8.5pt; }
+	.hd .id { margin-left: 10px; }
+	.hd .muted { color: #555; }
+	.ft { box-sizing: border-box; height: {{ footer_height }}px; overflow: hidden; white-space: nowrap; font-weight: 700; font-size: 7pt; padding-top: 8px; }
+	.ft .lhf { height: {{ footer_height - 24 }}px; overflow: hidden; font-weight: 400; }
+
+	table.sec { width: 100%; border-collapse: collapse; table-layout: fixed; }
+	table.sec + table.sec { break-before: page; page-break-before: always; }
+	col.c-code { width: 11%; }
+	col.c-name { width: 28%; }
+	col.c-num { width: 11%; }
+	thead { display: table-header-group; }
+	th, td { padding: 0 1.2mm; vertical-align: top; overflow: hidden; }
+	th { text-align: left; font-weight: 400; }
+	tr.stitle th { text-align: center; font-weight: 700; font-size: 9pt; padding: 1mm 0 2mm; }
+	tr.band th { background: {{ accent }}; color: #fff; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; padding: 1.2mm 1.2mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+	tr.cols th { background: {{ accent_tint }}; color: {{ accent }}; padding: 1.5mm 1.2mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+	tbody td { white-space: nowrap; }
+	div.ln { height: 3.6mm; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+	div.g { font-weight: 700; }
+	tr { break-inside: avoid; page-break-inside: avoid; }
+	tbody tr:first-child td { padding-top: 2mm; }
+	td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+	.sep { border-left: 0.6pt solid {{ accent_tint_strong }}; }
+	{#- the totals never open a page alone: the last lines come along -#}
+	tr.foot { break-before: avoid; page-break-before: avoid; }
+	tr.foot > td { padding: 0; height: auto; }
+	table.tot { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 3mm; border-top: 0.8pt solid {{ accent }}; }
+	table.tot td { padding: 0.6mm 1.2mm; height: auto; white-space: nowrap; }
+	table.tot tr.first td { padding-top: 3mm; }
+	table.tot td.lbl { text-align: right; font-weight: 700; padding-right: 3mm; }
+	table.tot tr.first td.lbl, table.tot tr.par td.lbl { letter-spacing: 0.08em; text-transform: uppercase; }
+	table.tot tr.par td { border-top: 0.8pt solid #999; padding-top: 2mm; font-weight: 700; }
+	table.tot tr.gap td { height: 3mm; padding: 0; }
+	table.tot td.num { font-weight: 700; }
+	.end { margin-top: 6mm; font-weight: 700; font-size: 7pt; }
+	.filters { color: #555; }
+</style>
+</head>
+<body>
+<div class="print-format">
+	<div id="header-html">
+		{#- a table, not flex: wkhtmltopdf's WebKit has no flexbox -#}
+		<div class="hd">
+			{%- if letter_head %}<div class="lh">{{ letter_head.content or "" }}</div>{% endif %}
+			<table class="hrow">
+				<tr class="first">
+					<td class="ttl">{% if logo %}<img src="{{ logo|e }}" alt="">{% endif %}{{ title|e }}</td>
+					<td class="r"><span class="k">{{ _("Page", context="trial_balance") }}:</span><span class="page"></span></td>
+				</tr>
+				<tr>
+					<td class="ids"><span class="k">{{ _("Company", context="trial_balance") }}:</span><span class="co">{{ company.name|e }}</span>
+					{%- if settings.show_tax_id %}{% if company.fiscal_code %}<span class="id">{{ company.fiscal_code|e }}</span>{% endif %}{% if company.tax_id %}<span class="id">{{ company.tax_id|e }}</span>{% endif %}{% endif %}</td>
+					<td class="r"><span class="k">{{ _("Print date", context="trial_balance") }}:</span>{{ print_date }}</td>
+				</tr>
+				<tr>
+					<td class="muted">{% if settings.show_address %}{{ company.address|e }}{% endif %}</td>
+					<td class="r"><span class="k">{{ _("Period", context="trial_balance") }}:</span>{{ period_from }} - {{ period_to }}</td>
+				</tr>
+				{%- if cost_center or finance_book %}
+				<tr>
+					<td></td>
+					<td class="r muted">{% if cost_center %}{{ _("Cost Center", context="trial_balance") }}: {{ cost_center|e }}{% endif %}{% if cost_center and finance_book %}, {% endif %}{% if finance_book %}{{ _("Finance Book", context="trial_balance") }}: {{ finance_book|e }}{% endif %}</td>
+				</tr>
+				{%- endif %}
+			</table>
+		</div>
+	</div>
+	<div id="footer-html">
+		<div class="ft">
+			{%- if letter_head and letter_head.footer %}<div class="lhf">{{ letter_head.footer }}</div>{% endif %}
+			<div class="cont" data-label="{{ _("Continued...", context="trial_balance") }}"><span class="page" style="display:none"></span><span class="topage" style="display:none"></span><span class="txt"></span></div>
+		</div>
+		<script>
+		(function () {
+			function fill() {
+				var items = document.querySelectorAll(".cont");
+				for (var i = 0; i < items.length; i++) {
+					var el = items[i];
+					var p = parseInt(el.querySelector(".page").textContent, 10) || 0;
+					var t = parseInt(el.querySelector(".topage").textContent, 10) || 0;
+					var v = p && t && p < t ? el.getAttribute("data-label") : "";
+					var txt = el.querySelector(".txt");
+					if (txt.textContent !== v) txt.textContent = v;
+				}
+			}
+			if (window.MutationObserver) new MutationObserver(fill).observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+			window.addEventListener("load", fill);
+		})();
+		</script>
+	</div>
+
+	{%- for section in report.sections %}
+	<table class="sec {{ section.key }}">
+		{{ colgroup() }}
+		<thead>
+			<tr class="stitle"><th colspan="6">{{ section.title|e }}</th></tr>
+			<tr class="band"><th colspan="3">{{ section.left_label|e }}</th><th colspan="3">{{ section.right_label|e }}</th></tr>
+			<tr class="cols">
+				<th>{{ _("Account", context="trial_balance") }}</th><th>{{ _("Description", context="trial_balance") }}</th><th class="num">{{ _("Amount", context="trial_balance") }}</th>
+				<th>{{ _("Account", context="trial_balance") }}</th><th>{{ _("Description", context="trial_balance") }}</th><th class="num">{{ _("Amount", context="trial_balance") }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{%- for left, right in section.rows %}
+			<tr>{{ side_cells(left) }}{{ side_cells(right, True) }}</tr>
+			{%- else %}
+			<tr><td colspan="6" style="text-align:center">{{ _("No balances in this period", context="trial_balance") }}</td></tr>
+			{%- endfor %}
+			<tr class="foot"><td colspan="6">
+				<table class="tot">
+					{{ colgroup() }}
+					<tr class="first">
+						<td class="lbl" colspan="2">{{ section.left_total_label|e }}</td><td class="num">{{ amount(section.left_total) }}</td>
+						<td class="lbl" colspan="2">{{ section.right_total_label|e }}</td><td class="num">{{ amount(section.right_total) }}</td>
+					</tr>
+					{%- for left, right in section.footer %}
+					<tr>{{ result_cells(left) }}{{ result_cells(right) }}</tr>
+					{%- endfor %}
+					<tr class="gap"><td colspan="6"></td></tr>
+					<tr class="par">
+						<td class="lbl" colspan="2">{{ _("Balancing total", context="trial_balance") }}</td><td class="num">{{ amount(section.left_pareggio) }}</td>
+						<td class="lbl" colspan="2">{{ _("Balancing total", context="trial_balance") }}</td><td class="num">{{ amount(section.right_pareggio) }}</td>
+					</tr>
+				</table>
+			</td></tr>
+		</tbody>
+	</table>
+	{%- endfor %}
+	<div class="end">{{ _("End of report", context="trial_balance") }}</div>
+</div>
+</body>
+</html>
