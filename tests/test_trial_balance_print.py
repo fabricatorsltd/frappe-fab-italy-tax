@@ -390,7 +390,7 @@ class TestTrialBalanceLedger(unittest.TestCase):
 		html = tb.render_html(filters, report=report)
 		self.assertIn("Balance sheet from", html)
 		self.assertIn("Profit and loss from", html)
-		self.assertIn('class="ln g"', html)
+		self.assertIn('<tr class="g">', html)
 		self.assertIn("Trial Sales", html)
 		self.assertIn('id="header-html"', html)
 

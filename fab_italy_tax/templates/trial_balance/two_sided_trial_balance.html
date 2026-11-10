@@ -2,11 +2,16 @@
 {#- Two-sided trial balance. Rendered by fab_italy_tax.trial_balance_print through the Frappe
     PDF pipeline: #header-html and #footer-html become the page header and footer. -#}
 {%- macro side_cells(items, right=False) -%}
-	{#- one div per printed line, so a group header and its first account share a row -#}
-	{%- set sep = " sep" if right else "" -%}
-	<td class="code{{ sep }}">{% for kind, value in items %}<div class="ln{{ ' g' if kind == 'group' }}">{% if kind in ("group", "line") and value.number %}{{ value.number|e }}{% else %}&nbsp;{% endif %}</div>{% endfor %}</td>
-	<td class="name">{% for kind, value in items %}<div class="ln{{ ' g' if kind == 'group' }}">{% if kind in ("group", "line") %}{{ value.name|e }}{% else %}&nbsp;{% endif %}</div>{% endfor %}</td>
-	<td class="num">{% for kind, value in items %}<div class="ln{{ ' g' if kind == 'group' }}">{% if kind == "group" %}{{ amount(value.total) }}{% elif kind == "line" %}{{ amount(value.amount) }}{% else %}&nbsp;{% endif %}</div>{% endfor %}</td>
+	{#- one row per printed line in a table of its own, so a long name wraps and its code and
+	    amount stay level with it; a group header and its first account share an outer row -#}
+	<td class="side{{ ' sep' if right }}" colspan="3"><table class="lines"><colgroup><col class="l-code"><col class="l-name"><col class="l-num"></colgroup>
+	{%- for kind, value in items %}<tr{% if kind == 'group' %} class="g"{% endif %}>
+		{%- if kind in ("group", "line") -%}
+		<td class="code">{% if value.number %}{{ value.number|e }}{% else %}&nbsp;{% endif %}</td><td class="name">{{ value.name|e }}</td><td class="num">{{ amount(value.total if kind == "group" else value.amount) }}</td>
+		{%- else -%}
+		<td class="code">&nbsp;</td><td class="name">&nbsp;</td><td class="num">&nbsp;</td>
+		{%- endif -%}
+	</tr>{% endfor %}</table></td>
 {%- endmacro -%}
 {%- macro result_cells(item, right=False) -%}
 	{%- set sep = " sep" if right else "" -%}
@@ -65,11 +70,17 @@
 	tr.stitle th { text-align: center; font-weight: 700; font-size: 9pt; padding: 1mm 0 2mm; }
 	tr.band th { background: {{ accent }}; color: #fff; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; padding: 1.2mm 1.2mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 	tr.cols th { background: {{ accent_tint }}; color: {{ accent }}; padding: 1.5mm 1.2mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-	tbody td { white-space: nowrap; }
-	div.ln { height: 3.6mm; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-	div.g { font-weight: 700; }
+	table.sec > tbody > tr > td { white-space: nowrap; }
+	table.sec > tbody > tr > td.side { padding: 0; }
+	table.lines { width: 100%; border-collapse: collapse; table-layout: fixed; }
+	col.l-code { width: 22%; }
+	col.l-name { width: 56%; }
+	col.l-num { width: 22%; }
+	table.lines td { height: 3.6mm; white-space: nowrap; }
+	table.lines td.name { white-space: normal; overflow-wrap: break-word; word-wrap: break-word; }
+	table.lines tr.g td { font-weight: 700; }
 	tr { break-inside: avoid; page-break-inside: avoid; }
-	tbody tr:first-child td { padding-top: 2mm; }
+	table.sec > tbody > tr:first-child > td { padding-top: 2mm; }
 	td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 	.sep { border-left: 0.6pt solid {{ accent_tint_strong }}; }
 	{#- the totals never open a page alone: the last lines come along -#}
