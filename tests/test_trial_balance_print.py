@@ -394,6 +394,52 @@ class TestTrialBalanceLedger(unittest.TestCase):
 		self.assertIn("Trial Sales", html)
 		self.assertIn('id="header-html"', html)
 
+	def test_report_filters_pick_the_dates_of_filter_based_on(self):
+		# the financial statements keep the hidden filters of the other mode filled in
+		def dates(based_on, **filters):
+			filters = tb.normalize_filters(
+				dict(
+					company=COMPANY,
+					filter_based_on=based_on,
+					period_start_date="2026-03-01",
+					period_end_date="2026-03-31",
+					**filters,
+				)
+			)
+			self.assertNotIn("period_start_date", filters)
+			return filters.from_date, filters.to_date
+
+		self.assertEqual(
+			dates("Fiscal Year", from_fiscal_year="2025", to_fiscal_year="2026"),
+			(date(2025, 1, 1), date(2026, 12, 31)),
+		)
+		self.assertEqual(
+			dates("Fiscal Year", from_fiscal_year="2026"), (date(2026, 1, 1), date(2026, 12, 31))
+		)
+		self.assertEqual(
+			dates("Date Range", from_fiscal_year="2025", to_fiscal_year="2025"),
+			(date(2026, 3, 1), date(2026, 3, 31)),
+		)
+		with self.assertRaises(frappe.ValidationError):
+			dates("Fiscal Year")
+		with self.assertRaises(frappe.ValidationError):
+			dates("Fiscal Year", from_fiscal_year="2026", to_fiscal_year="2025")
+
+	def test_cost_center_list_of_the_reports_filters_like_a_name(self):
+		listed, filters = self.report(fiscal_year="2026", cost_center=[self.other_cc])
+		named, _filters = self.report(fiscal_year="2026", cost_center=self.other_cc)
+		self.assertEqual(filters.cost_center, [self.other_cc])
+		html = tb.render_html(filters, report=listed)
+		self.assertIn(f"Cost Center: {self.other_cc}<", html.replace("</td>", "<"))
+		self.assertEqual(listed.profit, named.profit)
+		self.assertEqual(listed.profit, -50.0)
+
+	def test_unchecked_default_book_entries_stay_off(self):
+		filters = tb.normalize_filters(
+			dict(company=COMPANY, fiscal_year="2026", include_default_book_entries=0)
+		)
+		self.assertEqual(filters.include_default_book_entries, 0)
+
 	def test_permission_follows_roles_and_user_permissions(self):
 		tb.check_permission(COMPANY, user=USER)
 		with self.assertRaises(frappe.PermissionError):

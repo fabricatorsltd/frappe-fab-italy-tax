@@ -29,6 +29,7 @@ required_apps = ["erpnext", "fab"]
 # include js, css files in header of desk.html
 # app_include_css = "/assets/fab_italy_tax/css/fab_italy_tax.css"
 # app_include_js = "/assets/fab_italy_tax/js/fab_italy_tax.js"
+app_include_js = "/assets/fab_italy_tax/js/two_sided_trial_balance_report.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/fab_italy_tax/css/fab_italy_tax.css"

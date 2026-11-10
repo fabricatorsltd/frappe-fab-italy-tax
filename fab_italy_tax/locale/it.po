@@ -918,6 +918,14 @@ msgstr "Impostazioni stampa bilancio di verifica"
 msgid "Two-sided Trial Balance"
 msgstr "Bilancio di verifica a sezioni contrapposte"
 
+#: fab_italy_tax/public/js/two_sided_trial_balance_report.js:45
+msgid "Set {0} in the report filters first."
+msgstr "Imposta {0} nei filtri del report."
+
+#: fab_italy_tax/public/js/two_sided_trial_balance_report.js:104
+msgid "Two-sided Trial Balance (PDF)"
+msgstr "Bilancio a sezioni contrapposte (PDF)"
+
 #: fab_italy_tax/trial_balance_print.py:257
 msgctxt "trial_balance"
 msgid "Unbalanced difference"

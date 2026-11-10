@@ -35,30 +35,47 @@ ROOT_TYPES = {
 # filters and permissions
 
 
+def fiscal_year_dates(fiscal_year: str, company: str):
+	dates = frappe.db.get_value("Fiscal Year", fiscal_year, ["year_start_date", "year_end_date"])
+	start, end = dates or (None, None)
+	if not start:
+		frappe.throw(_("Fiscal Year {0} does not exist").format(fiscal_year))
+	companies = frappe.get_all("Fiscal Year Company", filters={"parent": fiscal_year}, pluck="company")
+	if companies and company not in companies:
+		frappe.throw(_("Fiscal Year {0} is not available for Company {1}.").format(fiscal_year, company))
+	return start, end
+
+
 def normalize_filters(filters: dict | str | None) -> frappe._dict:
+	"""Dates from the page dialog (fiscal_year or from_date/to_date) or from the filters of the
+	financial statements, where filter_based_on picks from/to fiscal year or the period dates."""
 	filters = frappe._dict(frappe.parse_json(filters) if isinstance(filters, str) else (filters or {}))
 	if not filters.get("company"):
 		frappe.throw(_("Select a Company first."))
+	based_on = filters.pop("filter_based_on", None)
+	if based_on == "Date Range":
+		filters.from_date = filters.get("period_start_date") or filters.get("from_date")
+		filters.to_date = filters.get("period_end_date") or filters.get("to_date")
+	elif based_on == "Fiscal Year":
+		filters.fiscal_year = filters.get("from_fiscal_year") or filters.get("fiscal_year")
+		filters.from_date = filters.to_date = None
+		if filters.fiscal_year:
+			filters.from_date = fiscal_year_dates(filters.fiscal_year, filters.company)[0]
+			last = filters.get("to_fiscal_year") or filters.fiscal_year
+			filters.to_date = fiscal_year_dates(last, filters.company)[1]
+	for key in ("period_start_date", "period_end_date", "from_fiscal_year", "to_fiscal_year"):
+		filters.pop(key, None)
 	if filters.get("fiscal_year") and not (filters.get("from_date") and filters.get("to_date")):
-		start, end = frappe.db.get_value(
-			"Fiscal Year", filters.fiscal_year, ["year_start_date", "year_end_date"]
-		) or (None, None)
-		if not start:
-			frappe.throw(_("Fiscal Year {0} does not exist").format(filters.fiscal_year))
-		companies = frappe.get_all(
-			"Fiscal Year Company", filters={"parent": filters.fiscal_year}, pluck="company"
-		)
-		if companies and filters.company not in companies:
-			frappe.throw(
-				_("Fiscal Year {0} is not available for Company {1}.").format(filters.fiscal_year, filters.company)
-			)
-		filters.from_date, filters.to_date = start, end
+		filters.from_date, filters.to_date = fiscal_year_dates(filters.fiscal_year, filters.company)
 	if not (filters.get("from_date") and filters.get("to_date")):
 		frappe.throw(_("Select a Fiscal Year or both From Date and To Date."))
 	filters.from_date = getdate(filters.from_date)
 	filters.to_date = getdate(filters.to_date)
 	if filters.from_date > filters.to_date:
 		frappe.throw(_("From Date must be before To Date"))
+	# the financial statements send the cost centers of a multi select as a list
+	if isinstance(filters.get("cost_center"), list):
+		filters.cost_center = [c for c in filters.cost_center if c] or None
 	filters.include_default_book_entries = cint(filters.get("include_default_book_entries", 1))
 	return filters
 
@@ -463,7 +480,7 @@ def get_render_context(filters, settings=None, report=None, wkhtmltopdf=None) ->
 		"accent_tint_strong": tint(accent, 0.45),
 		"font_family": f"{font}, {FONT_FALLBACK}" if font else FONT_FALLBACK,
 		"wkhtmltopdf": pdf_generator() == "wkhtmltopdf" if wkhtmltopdf is None else wkhtmltopdf,
-		"cost_center": filters.get("cost_center"),
+		"cost_center": ", ".join(cc) if isinstance(cc := filters.get("cost_center"), list) else cc,
 		"finance_book": filters.get("finance_book"),
 		"amount": lambda value: fmt_money(value, 2),
 		"lang": frappe.local.lang or "en",
@@ -504,8 +521,11 @@ def pdf_filename(filters, title: str) -> str:
 
 @frappe.whitelist()
 def download_pdf(filters: str | dict) -> None:
+	filters = frappe.parse_json(filters) if isinstance(filters, str) else (filters or {})
+	if filters.get("company"):
+		# before normalize_filters, whose fiscal year lookups name what exists
+		check_permission(filters["company"])
 	filters = normalize_filters(filters)
-	check_permission(filters.company)
 	html = render_html(filters)
 	title = (get_settings().report_title or "").strip() or _("Trial balance", context="trial_balance")
 	frappe.local.response.filename = pdf_filename(filters, title)

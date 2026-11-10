@@ -96,7 +96,9 @@ matching F24 Deadline event as paid.
   font, title, group level and zero lines are set in Trial Balance Print
   Settings. The PDF engine is the site config key
   `trial_balance_pdf_generator` (for example `chrome`), else Print
-  Settings.
+  Settings. The same PDF downloads from the Profit and Loss Statement,
+  Balance Sheet and Trial Balance reports ("..." menu and Actions), with
+  the report's company, period, cost center and finance book filters.
 
 ## Troubleshooting
 
